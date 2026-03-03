@@ -6,7 +6,7 @@ const path = require("path");
 // (Aucune référence/dépendance à Lovable)
 
 module.exports = {
-  base: '/website/'
+  base: "/website/",
   server: {
     host: "::",
     port: 8080,
