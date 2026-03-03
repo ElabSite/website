@@ -27,17 +27,22 @@ jobs:
           node-version: 20
 
       - name: Install deps
-        run: npm install
-        working-directory: src
+        run: npm ci
 
       - name: Build
         run: npm run build
-        working-directory: src
+
+      - name: Debug dist
+        run: |
+          pwd
+          ls -la
+          ls -la dist || true
+          ls -la src/dist || true
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: src/dist
+          path: dist
 
   deploy:
     needs: build
