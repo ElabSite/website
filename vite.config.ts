@@ -1,20 +1,21 @@
-// NOTE: configuration en CommonJS pour supporter `__dirname` sans `import.meta`.
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const path = require("path");
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+import react from "@vitejs/plugin-react-swc";
+import { defineConfig } from "vite";
 
-// Pour GitHub Pages, définissez `base` sur le nom du repo, ex: "/mon-repo/"
-// (Aucune référence/dépendance à Lovable)
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-module.exports = {
+export default defineConfig({
   base: "/website/",
+  plugins: [react()],
   server: {
     host: "::",
     port: 8080,
   },
-  plugins: [require("@vitejs/plugin-react-swc")()].filter(Boolean),
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
   },
-};
+});
