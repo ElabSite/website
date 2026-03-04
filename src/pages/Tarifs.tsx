@@ -40,19 +40,20 @@ const plans = [
     popular: true,
   },
   {
-    name: "Site Vitrine+",
+    name: "Site Vitrine + mini-boutique",
     price: "890",
-    description: "Pour les entreprises exigeantes avec des besoins avancés",
+    description: "Pour les entreprises souhaitant vendre ses produits",
     features: [
-      "Jusqu'à 10 pages personnalisées",
-      "Design premium haut de gamme",
-      "Blog intégré",
-      "SEO avancé + Google Analytics",
-      "Formulaires multiples",
+      "Jusqu'à 5 pages personnalisées",
+      "Boutique avec 10 produits max",
+      "Design premium sur mesure",
+      "Formulaire de contact avancé",
+      "Optimisation SEO complète",
       "Hébergement 1 an inclus",
       "Certificat SSL inclus",
-      "Animations & micro-interactions",
-      "Mise en ligne sous 21 jours",
+      "Intégration Google Maps",
+      "Intégration réseaux sociaux",
+      "Mise en ligne sous 15 jours",
     ],
     popular: false,
   },
@@ -61,7 +62,7 @@ const plans = [
 const maintenancePlans = [
   {
     name: "Essentiel",
-    price: "29",
+    price: "19",
     period: "/mois",
     features: [
       "Mises à jour de sécurité",
@@ -85,10 +86,10 @@ const maintenancePlans = [
     period: "/mois",
     features: [
       "Tout du plan Confort",
-      "Modifications illimitées",
+      "Modifications mineures (5/mois)",
+      "Modifications majeures (2/an),
       "Sauvegardes quotidiennes",
       "Optimisation SEO continue",
-      "Rapport détaillé hebdomadaire",
     ],
   },
 ];
@@ -100,7 +101,7 @@ const Tarifs = () => {
     if (meta) {
       meta.setAttribute(
         "content",
-        "Découvrez mes tarifs pour la création de site internet à Chambéry. Sites vitrine à partir de 190€ TTC, maintenance dès 29€/mois. Devis gratuit."
+        "Découvrez mes tarifs pour la création de site internet à Chambéry. Sites vitrine à partir de 190€ TTC, maintenance dès 19€/mois. Devis gratuit."
       );
     }
   }, []);
