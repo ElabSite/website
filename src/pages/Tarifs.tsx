@@ -87,7 +87,7 @@ const maintenancePlans = [
     features: [
       "Tout du plan Confort",
       "Modifications mineures (5/mois)",
-      "Modifications majeures (2/an),
+      "Modifications majeures (2/an)",
       "Sauvegardes quotidiennes",
       "Optimisation SEO continue",
     ],
