@@ -25,6 +25,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: npm
 
       - name: Install deps
         run: npm install
@@ -32,36 +33,8 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Verify dist content
-        run: |
-          echo "PWD:"
-          pwd
-
-          echo "List repo root:"
-          ls -la
-
-          echo "List dist/:"
-          ls -la dist || true
-
-          echo "Check dist/index.html exists:"
-          test -f dist/index.html && echo "OK: dist/index.html exists" || (echo "ERROR: dist/index.html missing" && exit 1)
-
-          echo "List dist/assets (if any):"
-          ls -la dist/assets || true
-
-      - name: Show dist/index.html header (must reference /assets/)
-        run: |
-          echo "---- dist/index.html (first 40 lines) ----"
-          sed -n '1,40p' dist/index.html
-          echo "---- grep assets ----"
-          grep -n "assets" dist/index.html || true
-          echo "---- grep /src/main ----"
-          grep -n "/src/main.tsx" dist/index.html && (echo "ERROR: dist index is dev index" && exit 1) || true
-
-      - name: Create and inspect dist.zip (debug)
-        run: |
-          (cd dist && zip -r ../dist.zip .)
-          unzip -l dist.zip | head -n 50
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
 
       - name: Disable Jekyll
         run: touch dist/.nojekyll
@@ -69,7 +42,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ${{ github.workspace }}/dist
+          path: dist
 
   deploy:
     needs: build
