@@ -49,6 +49,20 @@ jobs:
           echo "List dist/assets (if any):"
           ls -la dist/assets || true
 
+      - name: Show dist/index.html header (must reference /assets/)
+        run: |
+          echo "---- dist/index.html (first 40 lines) ----"
+          sed -n '1,40p' dist/index.html
+          echo "---- grep assets ----"
+          grep -n "assets" dist/index.html || true
+          echo "---- grep /src/main ----"
+          grep -n "/src/main.tsx" dist/index.html && (echo "ERROR: dist index is dev index" && exit 1) || true
+
+      - name: Create and inspect dist.zip (debug)
+        run: |
+          (cd dist && zip -r ../dist.zip .)
+          unzip -l dist.zip | head -n 50
+
       - name: Disable Jekyll
         run: touch dist/.nojekyll
 
