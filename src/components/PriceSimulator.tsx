@@ -11,9 +11,9 @@ const BASE_PRICE_ONE_PAGE = 190;
 const PRICE_PER_EXTRA_PAGE = 100;
 const AUTONOMY_PRICE = 200;
 const maintenancePlans = [
-{ id: "essentiel", label: "Essentiel", price: 29, features: ["Mises à jour de sécurité", "Surveillance et maintien en ligne", "Corrections de bugs", "Sauvegardes hebdomadaires"] },
-{ id: "confort", label: "Confort", price: 49, features: ["Tout le plan Essentiel", "Modifications mineures de contenu", "Optimisation des performances", "Rapport mensuel"] },
-{ id: "premium", label: "Premium", price: 79, features: ["Tout le plan Confort", "Modifications illimitées de contenu", "Ajout de nouvelles fonctionnalités", "Priorité de traitement"] }];
+{ id: "essentiel", label: "Essentiel", price: 19, features: ["Mises à jour de sécurité", "Surveillance et maintien en ligne", "Corrections de bugs", "Sauvegardes hebdomadaires"] },
+{ id: "confort", label: "Confort", price: 59, features: ["Tout le plan Essentiel", "Modifications mineures de contenu", "Optimisation des performances", "Rapport mensuel"] },
+{ id: "premium", label: "Premium", price: 99, features: ["Tout le plan Confort", "Modifications illimitées de contenu", "Ajout de nouvelles fonctionnalités", "Priorité de traitement"] }];
 
 
 const pageOptions = [
