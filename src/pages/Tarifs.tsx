@@ -67,7 +67,7 @@ const maintenancePlans = [
     features: [
       "Mises à jour de sécurité",
       "Sauvegardes hebdomadaires",
-      "Monitoring uptime 24/7",
+      "Surveillance et maintien en ligne",
     ],
   },
   {
