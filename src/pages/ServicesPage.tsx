@@ -210,12 +210,12 @@ const ServicesPage = () => {
               </p>
             </div>
 
-            <div className="grid md:grid-cols-4 gap-8 max-w-5xl mx-auto">
+            <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
               {[
                 { step: "01", title: "Échange", desc: "On discute de vos besoins, objectifs et budget pour définir la meilleure approche." },
-                { step: "02", title: "Maquette", desc: "Je conçois le design de votre site et vous validez avant le développement." },
-                { step: "03", title: "Développement", desc: "Création du site avec les meilleures pratiques de sécurité et performance." },
-                { step: "04", title: "Mise en ligne", desc: "Déploiement, tests finaux et formation à la prise en main de votre site." },
+                //{ step: "02", title: "Maquette", desc: "Je conçois le design de votre site et vous validez avant le développement." },
+                { step: "02", title: "Développement", desc: "Création du site avec les meilleures pratiques de sécurité et performance." },
+                { step: "03", title: "Mise en ligne", desc: "Déploiement, tests finaux et mise en production de votre site." },
               ].map((item) => (
                 <div key={item.step} className="text-center">
                   <div className="w-14 h-14 bg-primary text-primary-foreground rounded-2xl flex items-center justify-center mx-auto mb-4 text-xl font-bold">
