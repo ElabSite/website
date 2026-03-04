@@ -68,6 +68,7 @@ const maintenancePlans = [
       "Mises à jour de sécurité",
       "Sauvegardes hebdomadaires",
       "Surveillance et maintien en ligne",
+      "Correction de bugs",
     ],
   },
   {
@@ -90,6 +91,7 @@ const maintenancePlans = [
       "Modifications majeures (2/an)",
       "Sauvegardes quotidiennes",
       "Optimisation SEO continue",
+      "Priorité de traitement",
     ],
   },
 ];
