@@ -4,18 +4,18 @@ const steps = [
     title: "Écoute & Analyse",
     description: "Je prends le temps de comprendre votre projet, vos objectifs et votre cible.",
   },
+//  {
+//    number: "02",
+//    title: "Conception",
+//    description: "Création d'une maquette personnalisée qui reflète votre identité et vos besoins.",
+//  },
   {
     number: "02",
-    title: "Conception",
-    description: "Création d'une maquette personnalisée qui reflète votre identité et vos besoins.",
-  },
-  {
-    number: "03",
     title: "Développement",
     description: "Réalisation de votre site avec les dernières technologies web pour une performance optimale.",
   },
   {
-    number: "04",
+    number: "03",
     title: "Livraison & Suivi",
     description: "Mise en ligne sécurisée et accompagnement pour la maintenance et l'évolution de votre site.",
   },
