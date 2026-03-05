@@ -272,7 +272,7 @@ const Tarifs = () => {
               Obtenez votre devis gratuit
             </h2>
             <p className="text-xl opacity-90 mb-8 max-w-2xl mx-auto">
-              Contactez-moi pour discuter de votre projet. Devis personnalisé sous 24h.
+              Contactez-moi pour discuter de votre projet. Devis personnalisé sous 48h.
             </p>
             <Button size="lg" variant="secondary" className="text-lg px-8 py-6 hover:scale-105 transition-transform">
               Demander un devis gratuit
