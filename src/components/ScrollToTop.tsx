@@ -2,14 +2,24 @@ import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
 export default function ScrollToTop() {
-  const { pathname } = useLocation();
+  const { pathname, hash } = useLocation();
 
   useEffect(() => {
-    // Remet en haut à chaque changement de page
-    window.scrollTo({ top: 0, left: 0, behavior: "instant" as ScrollBehavior });
-    // alternative sans cast:
-    // window.scrollTo(0, 0);
-  }, [pathname]);
+    if (hash) {
+      const id = hash.replace("#", "");
+      requestAnimationFrame(() => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth", block: "start" });
+        } else {
+          window.scrollTo(0, 0);
+        }
+      });
+      return;
+    }
+
+    window.scrollTo(0, 0);
+  }, [pathname, hash]);
 
   return null;
 }
