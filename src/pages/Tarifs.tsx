@@ -275,7 +275,7 @@ const Tarifs = () => {
               Contactez-moi pour discuter de votre projet. Devis personnalisé sous 48h.
             </p>
             <Button size="lg" variant="secondary" className="text-lg px-8 py-6 hover:scale-105 transition-transform">
-              Demander un devis gratuit
+            <Link to="/contact">Demander un devis gratuit</Link>
             </Button>
           </div>
         </section>
