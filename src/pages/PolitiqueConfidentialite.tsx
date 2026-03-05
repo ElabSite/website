@@ -27,7 +27,7 @@ const PolitiqueConfidentialite = () => {
             <h2 className="text-xl font-bold text-foreground mb-3">1. Responsable du traitement</h2>
             <p className="text-muted-foreground leading-relaxed">
               <strong>Elab'Site</strong><br />
-              Siège : Chambéry, 73000, Savoie, France<br />
+              Siège : Challes-les-Eaux, 73190, Savoie, France<br />
               Email : <a href="mailto:contact@elabsite.fr" className="text-primary hover:underline">contact@elabsite.fr</a><br />
               Le responsable du traitement est [Nom du responsable à compléter].
             </p>
