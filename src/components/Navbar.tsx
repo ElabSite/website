@@ -42,7 +42,7 @@ const Navbar = () => {
               </Link>
             ))}
             <Button size="sm" asChild>
-              <Link to="/tarifs">Demander un devis</Link>
+              <Link to="/tarifs#simulateur">Estimer le prix</Link>
             </Button>
           </div>
 
@@ -75,8 +75,8 @@ const Navbar = () => {
               </Link>
             ))}
             <Button size="sm" className="w-full mt-2" asChild>
-              <Link to="/tarifs" onClick={() => setIsOpen(false)}>
-                Demander un devis
+              <Link to="/tarifs#simulateur" onClick={() => setIsOpen(false)}>
+                Estimer le prix
               </Link>
             </Button>
           </div>
