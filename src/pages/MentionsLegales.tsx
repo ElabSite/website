@@ -25,7 +25,7 @@ const MentionsLegales = () => {
               Le site <strong>elabsite.fr</strong> est édité par :<br />
               <strong>Elab'Site</strong><br />
               Statut : EI<br />
-              Siège social : Chambéry, 73000, Savoie, France<br />
+              Siège : Challes-les-Eaux, 73190, Savoie, France<br />
               SIRET : 88828400700042 (ProCloud Digital) <br />
               Email : <a href="mailto:contact@elabsite.fr" className="text-primary hover:underline">contact@elabsite.fr</a>
             </p>
