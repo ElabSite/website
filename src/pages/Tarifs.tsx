@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import PriceSimulator from "@/components/PriceSimulator";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const plans = [
   {
