@@ -227,7 +227,7 @@ const PriceSimulator = () => {
   const maxPages = getEffectivePageCount();
 
   return (
-    <section className="py-20 bg-accent/10">
+    <section id="simulateur" className="py-20 bg-accent/10">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-semibold mb-4">
