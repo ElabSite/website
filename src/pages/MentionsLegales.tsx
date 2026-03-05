@@ -24,10 +24,9 @@ const MentionsLegales = () => {
             <p className="text-muted-foreground leading-relaxed">
               Le site <strong>elabsite.fr</strong> est édité par :<br />
               <strong>Elab'Site</strong><br />
-              Statut : [Micro-entreprise / SAS / SARL – à compléter]<br />
+              Statut : EI<br />
               Siège social : Chambéry, 73000, Savoie, France<br />
-              SIRET : [Numéro SIRET à compléter]<br />
-              Responsable de la publication : [Nom du responsable à compléter]<br />
+              SIRET : 88828400700042 (ProCloud Digital) <br />
               Email : <a href="mailto:contact@elabsite.fr" className="text-primary hover:underline">contact@elabsite.fr</a>
             </p>
           </section>
