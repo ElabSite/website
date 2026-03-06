@@ -19,16 +19,25 @@ const CTA = () => {
               variant="secondary"
               className="text-lg px-8 py-6 hover:scale-105 transition-transform"
             >
-              <a href="/contact">Demander un devis</a>
-            </Button>
+              <Link to="/contact">Demander un devis</Link>
+              {/*</Button>
             <Button 
               asChild
               size="lg" 
               variant="outline"
               className="border-2 border-primary-foreground bg-primary-foreground text-primary hover:bg-transparent hover:text-primary-foreground text-lg px-8 py-6"
             >
-              <a href="/realisations">Voir mes réalisations</a>
+              <Link to="/contact">Voir mes réalisations</Link>
             </Button>
+            */}
+            <Button 
+              asChild
+              size="lg" 
+              variant="outline"
+              className="border-2 border-primary-foreground bg-primary-foreground text-primary hover:bg-transparent hover:text-primary-foreground text-lg px-8 py-6"
+            >
+              <Link to="/tarifs#simulateur">Estimer le prix</Link>
+            </Button>        
           </div>
         </div>
       </div>
@@ -37,3 +46,4 @@ const CTA = () => {
 };
 
 export default CTA;
+
