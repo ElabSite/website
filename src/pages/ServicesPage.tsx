@@ -270,10 +270,10 @@ const ServicesPage = () => {
               </Button>
 
               <Button
+                asChild
                 size="lg"
                 variant="outline"
-                className="text-lg px-8 py-6 border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground"
-                asChild
+                className="border-2 border-primary-foreground bg-primary-foreground text-primary hover:bg-transparent hover:text-primary-foreground text-lg px-8 py-6"
               >
                 <Link to="/tarifs">Voir les tarifs</Link>
               </Button>
