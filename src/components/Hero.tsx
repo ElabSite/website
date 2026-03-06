@@ -28,7 +28,8 @@ const Hero = () => {
               size="lg" 
               className="bg-primary hover:bg-primary/90 text-primary-foreground text-lg px-8 py-6 transition-all duration-300 hover:scale-105 shadow-lg"
             >
-              <a href="/contact">Démarrer mon projet</a>
+              {/*<a href="/contact">Démarrer mon projet</a>*/}
+              <Link to="/contact">Démarrer mon projet</Link>
             </Button>
             <Button 
               asChild
@@ -36,7 +37,8 @@ const Hero = () => {
               variant="outline"
               className="border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground text-lg px-8 py-6 transition-all duration-300"
             >
-              <a href="/services">Découvrir mes services</a>
+              {/*<a href="/services">Découvrir mes services</a>*/}
+              <Link to="/services">Découvrir mes services</Link>
             </Button>
           </div>
         </div>
