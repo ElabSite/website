@@ -10,35 +10,28 @@ const CTA = () => {
             Prêt à lancer votre projet web ?
           </h2>
           <p className="text-xl mb-8 opacity-90">
-            Contactez-moi pour un devis gratuit et personnalisé. 
-            Ensemble, créons le site qui fera la différence pour votre activité.
+            Contactez-moi pour un devis gratuit et personnalisé. Ensemble, créons le site
+            qui fera la différence pour votre activité.
           </p>
+
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button 
+            <Button
               asChild
-              size="lg" 
+              size="lg"
               variant="secondary"
               className="text-lg px-8 py-6 hover:scale-105 transition-transform"
             >
               <Link to="/contact">Demander un devis</Link>
-              {/*</Button>
-            <Button 
-              asChild
-              size="lg" 
-              variant="outline"
-              className="border-2 border-primary-foreground bg-primary-foreground text-primary hover:bg-transparent hover:text-primary-foreground text-lg px-8 py-6"
-            >
-              <Link to="/contact">Voir mes réalisations</Link>
             </Button>
-            */}
-            <Button 
+
+            <Button
               asChild
-              size="lg" 
+              size="lg"
               variant="outline"
               className="border-2 border-primary-foreground bg-primary-foreground text-primary hover:bg-transparent hover:text-primary-foreground text-lg px-8 py-6"
             >
               <Link to="/tarifs#simulateur">Estimer le prix</Link>
-            </Button>        
+            </Button>
           </div>
         </div>
       </div>
@@ -47,5 +40,3 @@ const CTA = () => {
 };
 
 export default CTA;
-
-
