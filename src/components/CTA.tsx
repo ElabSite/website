@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 const CTA = () => {
   return (
@@ -46,4 +47,5 @@ const CTA = () => {
 };
 
 export default CTA;
+
 
