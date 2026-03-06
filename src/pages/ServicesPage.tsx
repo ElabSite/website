@@ -187,7 +187,7 @@ const ServicesPage = () => {
 
                   <div className="text-center">
                     <Badge variant="outline" className="text-sm">
-                      Recommandé pour : blogs, PME, contenu évolutif
+                      Recommandé pour : blogs, vitrine avec contenu évolutif
                     </Badge>
                   </div>
                 </CardContent>
@@ -219,7 +219,7 @@ const ServicesPage = () => {
                   </ul>
 
                   <div className="text-center">
-                    <Badge className="text-sm">Recommandé pour : vitrine premium, landing pages, SaaS</Badge>
+                    <Badge className="text-sm">Recommandé pour : vitrine premium, moderne et perfomante</Badge>
                   </div>
                 </CardContent>
               </Card>
