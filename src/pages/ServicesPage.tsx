@@ -109,24 +109,27 @@ const ServicesPage = () => {
               </p>
             </div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-              {expertise.map((item) => (
-                <Card key={item.title} className="hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-                  <CardHeader>
-                    <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-3">
-                      <item.icon className="w-6 h-6 text-primary" />
-                    </div>
-                    <CardTitle className="text-lg">{item.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <CardDescription className="text-sm">{item.description}</CardDescription>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </div>
-        </section>
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+  {expertise.map((item) => (
+    <Card
+      key={item.title}
+      className="hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+    >
+      <CardHeader className="items-center text-center">
+        <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-3">
+          <item.icon className="w-6 h-6 text-primary" />
+        </div>
+        <CardTitle className="text-lg text-center">{item.title}</CardTitle>
+      </CardHeader>
 
+      <CardContent className="text-center">
+        <CardDescription className="text-sm text-center">
+          {item.description}
+        </CardDescription>
+      </CardContent>
+    </Card>
+  ))}
+</div>
         <section className="py-20 bg-secondary/30">
           <div className="container mx-auto px-4">
             <div className="text-center mb-16">
