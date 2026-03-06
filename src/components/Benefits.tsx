@@ -5,8 +5,8 @@ const benefits = [
   "Sécurité SSL et protection contre les menaces",
   "Design responsive adapté à tous les écrans",
   "Performances optimales et temps de chargement rapide",
-  "Formation et documentation complète",
-  "Support technique et maintenance inclus",
+//  "Formation et documentation complète",
+//  "Support technique et maintenance inclus",
 ];
 
 const Benefits = () => {
