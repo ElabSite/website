@@ -40,12 +40,11 @@ const services = [
 ];
 
 const advantages = [
-  "Expert web local implanté à Chambéry",
+  "Agence web local implantée à Chambéry",
   "Connaissance du tissu économique savoyard",
   "Accompagnement personnalisé de A à Z",
   "Tarifs jusqu'à 40% inférieurs aux grandes agences",
   "Sites livrés en 7 à 21 jours",
-  "Maintenance et support inclus",
 ];
 
 const faqs = [
@@ -55,7 +54,7 @@ const faqs = [
   },
   {
     question: "Combien de temps faut-il pour créer un site web à Chambéry ?",
-    answer: "Selon la formule choisie, votre site est livré en 7 jours (page unique), 15 jours (site vitrine) ou 21 jours (site vitrine+). Je respecte systématiquement mes délais.",
+    answer: "Selon la formule choisie, votre site peut-être livré en 7 jours (page unique), 15 jours (site vitrine) ou 21 jours (site vitrine + mini-boutique).",
   },
   {
     question: "Mon site sera-t-il bien référencé sur Google à Chambéry ?",
@@ -84,12 +83,12 @@ const localKeywords = [
 
 const CreationSiteChambery = () => {
   useEffect(() => {
-    document.title = "Création site internet Chambéry | Expert web Savoie | Elab'Site";
+    document.title = "Création site internet Chambéry | Agence web Savoie | Elab'Site";
     const meta = document.querySelector('meta[name="description"]');
     if (meta) {
       meta.setAttribute(
         "content",
-        "Création de site internet à Chambéry par un expert web local. Sites vitrine professionnels, référencement SEO local, design responsive. Devis gratuit sous 24h."
+        "Création de site internet à Chambéry par une agence web local. Sites vitrine professionnels, référencement SEO local, design responsive. Devis gratuit sous 24h."
       );
     }
   }, []);
@@ -98,7 +97,7 @@ const CreationSiteChambery = () => {
     "@context": "https://schema.org",
     "@type": "ProfessionalService",
     name: "Elab'Site - Création site internet Chambéry",
-    description: "Expert web spécialisé dans la création de sites internet professionnels à Chambéry, Savoie. Sites vitrine, référencement SEO local et maintenance.",
+    description: "Agence web spécialisée dans la création de sites internet professionnels à Chambéry, Savoie. Sites vitrine, référencement SEO local et maintenance.",
     url: "https://www.elabsite.fr/creation-site-internet-chambery",
     telephone: "+33-XXX-XXX-XXX",
     email: "contact@elabsite.fr",
@@ -156,25 +155,25 @@ const CreationSiteChambery = () => {
             <div className="max-w-4xl mx-auto text-center">
               <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-semibold mb-6">
                 <MapPin className="w-4 h-4" />
-                Expert web à Chambéry, Savoie
+                Agence web à Chambéry, Savoie
               </div>
               <h1 className="text-4xl md:text-6xl font-bold mb-6 text-foreground leading-tight">
                 Création de site internet à <span className="text-primary">Chambéry</span>
               </h1>
               <p className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto">
-                Votre <strong>expert web à Chambéry</strong> conçoit des sites vitrine professionnels, 
+                Votre <strong>agence web à Chambéry</strong> conçoit des sites vitrine professionnels, 
                 optimisés pour le <strong>référencement local en Savoie</strong>. Design sur mesure, 
                 performance et sécurité garantis.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button size="lg" className="text-lg px-8 py-6" asChild>
-                  <Link to="/tarifs">
+                  <Link to="/contact">
                     Demander un devis gratuit
                     <ArrowRight className="w-5 h-5 ml-2" />
                   </Link>
                 </Button>
                 <Button size="lg" variant="outline" className="text-lg px-8 py-6" asChild>
-                  <Link to="/realisations">Voir mes réalisations</Link>
+                  <Link to="/tarifs#simulateur">Estimer le prix</Link>
                 </Button>
               </div>
             </div>
@@ -183,9 +182,9 @@ const CreationSiteChambery = () => {
 
         <section className="py-12 border-b border-border">
           <div className="container mx-auto px-4">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-8 text-center">
               {[
-                { icon: Users, value: "50+", label: "Clients en Savoie" },
+                //{ icon: Users, value: "50+", label: "Clients en Savoie" },
                 { icon: Star, value: "5/5", label: "Satisfaction client" },
                 { icon: Clock, value: "7 jours", label: "Livraison express" },
                 { icon: Monitor, value: "100%", label: "Sites responsive" },
@@ -236,7 +235,7 @@ const CreationSiteChambery = () => {
                   Pourquoi choisir mon expertise web à Chambéry ?
                 </h2>
                 <p className="text-muted-foreground text-lg mb-8">
-                  En tant qu'<strong>expert web local à Chambéry</strong>, je comprends les besoins 
+                  En tant qu'<strong>agence web local à Chambéry</strong>, je comprends les besoins 
                   spécifiques des entreprises savoyardes. Ma proximité géographique me permet 
                   d'offrir un accompagnement personnalisé et réactif.
                 </p>
@@ -284,7 +283,7 @@ const CreationSiteChambery = () => {
               {[
                 { name: "Page Unique", price: "190", desc: "Idéal auto-entrepreneurs" },
                 { name: "Site Vitrine", price: "390", desc: "PME & artisans", popular: true },
-                { name: "Site Vitrine+", price: "890", desc: "Entreprises exigeantes" },
+                { name: "Site Vitrine + mini-boutique", price: "890", desc: "PME avec vente en ligne" },
               ].map((plan) => (
                 <Card key={plan.name} className={`text-center p-6 ${plan.popular ? "border-2 border-primary shadow-lg" : ""}`}>
                   {plan.popular && <div className="text-xs font-semibold text-primary mb-2">★ POPULAIRE</div>}
@@ -338,7 +337,7 @@ const CreationSiteChambery = () => {
               Prêt à lancer votre site internet à Chambéry ?
             </h2>
             <p className="text-xl opacity-90 mb-8 max-w-2xl mx-auto">
-              Contactez-moi pour un devis gratuit et personnalisé. Réponse garantie sous 24h.
+              Contactez-moi pour un devis gratuit et personnalisé. Réponse garantie sous 48h.
             </p>
             <Button size="lg" variant="secondary" className="text-lg px-8 py-6 hover:scale-105 transition-transform">
               Demander mon devis gratuit
