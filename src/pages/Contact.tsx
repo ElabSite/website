@@ -69,7 +69,7 @@ const Contact = () => {
                     <MapPin className="w-5 h-5 text-primary mt-1 shrink-0" />
                     <div>
                       <p className="font-medium text-foreground">Adresse</p>
-                      <p className="text-muted-foreground text-sm">Chambéry, Savoie (73)</p>
+                      <p className="text-muted-foreground text-sm">Challes-les-Eaux, Savoie (73)</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
