@@ -45,7 +45,6 @@ const advantages = [
   "Accompagnement personnalisé de A à Z",
   "Tarifs jusqu'à 40% inférieurs aux grandes agences",
   "Sites livrés en 7 à 21 jours",
-  "Maintenance et support inclus",
 ];
 
 const faqs = [
@@ -84,7 +83,7 @@ const localKeywords = [
 
 const CreationSiteAnnecy = () => {
   useEffect(() => {
-    document.title = "Création site internet Annecy | Expert web Haute-Savoie | Elab'Site";
+    document.title = "Création site internet Annecy | Agence web Haute-Savoie | Elab'Site";
     const meta = document.querySelector('meta[name="description"]');
     if (meta) {
       meta.setAttribute(
@@ -156,13 +155,13 @@ const CreationSiteAnnecy = () => {
             <div className="max-w-4xl mx-auto text-center">
               <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-semibold mb-6">
                 <MapPin className="w-4 h-4" />
-                Expert web à Annecy, Haute-Savoie
+                Agence web à Annecy, Haute-Savoie
               </div>
               <h1 className="text-4xl md:text-6xl font-bold mb-6 text-foreground leading-tight">
                 Création de site internet à <span className="text-primary">Annecy</span>
               </h1>
               <p className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto">
-                Votre <strong>expert web à Annecy</strong> conçoit des sites vitrine professionnels, 
+                Votre <strong>agence web à Annecy</strong> conçoit des sites vitrine professionnels, 
                 optimisés pour le <strong>référencement local en Haute-Savoie</strong>. Design sur mesure, 
                 performance et sécurité garantis.
               </p>
@@ -174,7 +173,7 @@ const CreationSiteAnnecy = () => {
                   </Link>
                 </Button>
                 <Button size="lg" variant="outline" className="text-lg px-8 py-6" asChild>
-                  <Link to="/realisations">Voir mes réalisations</Link>
+                  <Link to="/tarifs#simulateur">Estimer le prix</Link>
                 </Button>
               </div>
             </div>
@@ -183,9 +182,8 @@ const CreationSiteAnnecy = () => {
 
         <section className="py-12 border-b border-border">
           <div className="container mx-auto px-4">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-8 text-center">
               {[
-                { icon: Users, value: "50+", label: "Clients satisfaits" },
                 { icon: Star, value: "5/5", label: "Satisfaction client" },
                 { icon: Clock, value: "7 jours", label: "Livraison express" },
                 { icon: Monitor, value: "100%", label: "Sites responsive" },
@@ -236,7 +234,7 @@ const CreationSiteAnnecy = () => {
                   Pourquoi choisir mon expertise web à Annecy ?
                 </h2>
                 <p className="text-muted-foreground text-lg mb-8">
-                  En tant qu'<strong>expert web intervenant à Annecy</strong>, je comprends les besoins 
+                  En tant qu'<strong>agence web intervenant à Annecy</strong>, je comprends les besoins 
                   spécifiques des entreprises haut-savoyardes. Mon expertise d'ingénieur DevOps garantit 
                   des sites performants, sécurisés et parfaitement référencés.
                 </p>
@@ -338,7 +336,7 @@ const CreationSiteAnnecy = () => {
               Prêt à lancer votre site internet à Annecy ?
             </h2>
             <p className="text-xl opacity-90 mb-8 max-w-2xl mx-auto">
-              Contactez-moi pour un devis gratuit et personnalisé. Réponse garantie sous 24h.
+              Contactez-moi pour un devis gratuit et personnalisé. Réponse garantie sous 48h.
             </p>
             <Button size="lg" variant="secondary" className="text-lg px-8 py-6 hover:scale-105 transition-transform" asChild>
               <Link to="/contact">Demander mon devis gratuit</Link>
