@@ -36,7 +36,6 @@ const Contact = () => {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // time trap anti-bot
   const openedAtRef = useRef<number>(Date.now());
 
   const form = useForm<ContactFormValues>({
@@ -76,7 +75,6 @@ const Contact = () => {
     // 3) Honeypot
     const gotcha = form.getValues("_gotcha")?.trim();
     if (gotcha) {
-      // on bloque discrètement (comme si succès)
       e.preventDefault();
       form.reset();
       toast({
@@ -86,7 +84,6 @@ const Contact = () => {
       return;
     }
 
-    // 4) OK: on laisse le POST HTML se faire
     setIsSubmitting(true);
   };
 
@@ -151,9 +148,8 @@ const Contact = () => {
                     onSubmitCapture={onSubmitCapture}
                   >
                     {/* Optionnel (Formspree) */}
-                    <input type="hidden" name="_subject" value="Nouveau message - Elab'Site" />
+                    <input type="hidden" name="_subject" value="Demande de renseignements - Elab'Site" />
 
-                    {/* Honeypot: doit rester vide */}
                     <div
                       style={{
                         position: "absolute",
@@ -254,7 +250,6 @@ const Contact = () => {
                     </Button>
 
                     <p className="text-xs text-muted-foreground">
-                      Ce formulaire est protégé contre le spam (reCAPTCHA).
                     </p>
                   </form>
                 </Form>
