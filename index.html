@@ -4,47 +4,86 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Elab'Site - Agence Web Chambéry | Création Sites Vitrine & SEO</title>
-    <meta name="description" content="Agence web à Chambéry spécialisée dans la création de sites vitrine et pages uniques. Sécurité, référencement SEO et maintenance inclus. Professionnalisme et qualité garantis." />
+    <meta
+      name="description"
+      content="Agence web à Chambéry spécialisée dans la création de sites vitrine et pages uniques. Sécurité, référencement SEO et maintenance inclus. Professionnalisme et qualité garantis."
+    />
     <meta name="author" content="Elab'Site" />
-    <meta name="keywords" content="agence web Chambéry, création site internet, site vitrine, SEO Chambéry, maintenance site web, développement web Savoie" />
+    <meta
+      name="keywords"
+      content="agence web Chambéry, création site internet, site vitrine, SEO Chambéry, maintenance site web, développement web Savoie"
+    />
     <link rel="canonical" href="https://www.elabsite.fr" />
 
-    <meta property="og:title" content="Elab'Site - Agence Web Chambéry | Création Sites Vitrine & SEO" />
-    <meta property="og:description" content="Agence web à Chambéry spécialisée dans la création de sites vitrine et pages uniques. Sécurité, référencement SEO et maintenance inclus." />
+    <meta
+      property="og:title"
+      content="Elab'Site - Agence Web Chambéry | Création Sites Vitrine & SEO"
+    />
+    <meta
+      property="og:description"
+      content="Agence web à Chambéry spécialisée dans la création de sites vitrine et pages uniques. Sécurité, référencement SEO et maintenance inclus."
+    />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://www.elabsite.fr" />
     <meta property="og:image" content="https://www.elabsite.fr/og-image.jpg" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Elab'Site - Agence Web Chambéry" />
-    <meta name="twitter:description" content="Création de sites vitrine professionnels à Chambéry avec SEO et maintenance inclus." />
+    <meta
+      name="twitter:description"
+      content="Création de sites vitrine professionnels à Chambéry avec SEO et maintenance inclus."
+    />
     <meta name="twitter:image" content="https://www.elabsite.fr/og-image.jpg" />
-    <meta name="robots" content="noindex, nofollow" />
-    
+
+    <!-- IMPORTANT SEO:
+         Sur un site en prod, évite noindex/nofollow sinon Google n’indexera rien.
+         Laisse plutôt: index, follow. -->
+    <meta name="robots" content="index, follow" />
+
+    <!-- SPA fallback GitHub Pages:
+         Restaurer l’URL après redirection 404.html (accès direct à /tarifs, etc.) -->
+    <script>
+      (function () {
+        var params = new URLSearchParams(window.location.search);
+        var p = params.get("p"); // ex: "/tarifs"
+        var h = params.get("h"); // ex: "#simulateur"
+
+        if (p) {
+          // window.location.pathname ici vaut "/website/" (ou "/website" selon cas)
+          var basePath = window.location.pathname.replace(/\/$/, ""); // "/website"
+          var newUrl = window.location.origin + basePath + decodeURIComponent(p);
+
+          if (h) newUrl += decodeURIComponent(h);
+
+          window.history.replaceState(null, "", newUrl);
+        }
+      })();
+    </script>
+
     <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "LocalBusiness",
-      "name": "Elab'Site",
-      "description": "Agence web spécialisée dans la création de sites vitrine à Chambéry",
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Chambéry",
-        "addressRegion": "Savoie",
-        "addressCountry": "FR"
-      },
-      "url": "https://www.elabsite.fr",
-      "telephone": "+33670453230",
-      "priceRange": "€€",
-      "areaServed": {
-        "@type": "GeoCircle",
-        "geoMidpoint": {
-          "@type": "GeoCoordinates",
-          "latitude": "45.5646",
-          "longitude": "5.9178"
+      {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "name": "Elab'Site",
+        "description": "Agence web spécialisée dans la création de sites vitrine à Chambéry",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Chambéry",
+          "addressRegion": "Savoie",
+          "addressCountry": "FR"
+        },
+        "url": "https://www.elabsite.fr",
+        "telephone": "+33670453230",
+        "priceRange": "€€",
+        "areaServed": {
+          "@type": "GeoCircle",
+          "geoMidpoint": {
+            "@type": "GeoCoordinates",
+            "latitude": "45.5646",
+            "longitude": "5.9178"
+          }
         }
       }
-    }
     </script>
   </head>
 
