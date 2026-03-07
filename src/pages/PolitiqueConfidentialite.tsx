@@ -43,9 +43,6 @@ const PolitiqueConfidentialite = () => {
               <a href="mailto:contact@elabsite.fr" className="text-primary hover:underline">
                 contact@elabsite.fr
               </a>
-              <br />
-              Le responsable du traitement est{" "}
-              <strong>[Nom du responsable à compléter]</strong>.
             </p>
           </section>
 
