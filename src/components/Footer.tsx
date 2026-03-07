@@ -9,12 +9,13 @@ const Footer = () => {
           <div>
             <h3 className="text-2xl font-bold mb-4 text-foreground">Elab&apos;Site</h3>
             <p className="text-muted-foreground mb-4">
-              Agence web à Chambéry pour des sites professionnels, sécurisés et optimisés.
+              Expert web à Chambéry pour des sites professionnels, sécurisés et optimisés.
             </p>
           </div>
 
           <div>
             <h4 className="text-lg font-bold mb-4 text-foreground">Contact</h4>
+
             <div className="space-y-3">
               <div className="flex items-center gap-2 text-muted-foreground">
                 <MapPin className="w-5 h-5 text-primary" />
@@ -25,7 +26,7 @@ const Footer = () => {
                 <Phone className="w-5 h-5 text-primary" />
                 <a
                   href="tel:+33670453230"
-                  className="hover:text-primary transition-colors"
+                  className="underline underline-offset-4 hover:text-primary transition-colors"
                 >
                   +33 6 70 45 32 30
                 </a>
@@ -35,7 +36,7 @@ const Footer = () => {
                 <Mail className="w-5 h-5 text-primary" />
                 <a
                   href="mailto:contact@elabsite.fr"
-                  className="hover:text-primary transition-colors"
+                  className="underline underline-offset-4 hover:text-primary transition-colors"
                 >
                   contact@elabsite.fr
                 </a>
@@ -89,10 +90,7 @@ const Footer = () => {
             <Link to="/mentions-legales" className="hover:text-primary transition-colors">
               Mentions légales
             </Link>
-            <Link
-              to="/politique-de-confidentialite"
-              className="hover:text-primary transition-colors"
-            >
+            <Link to="/politique-de-confidentialite" className="hover:text-primary transition-colors">
               Politique de confidentialité
             </Link>
           </nav>
