@@ -19,17 +19,15 @@ import {
 import { useToast } from "@/hooks/use-toast";
 
 const FORMSPREE_ENDPOINT = "https://formspree.io/f/xkoqgrqw";
+const REDIRECT_URL = "/merci";
+
 const contactSchema = z.object({
   name: z.string().trim().min(1, "Veuillez entrer votre nom").max(100, "Nom trop long"),
   email: z.string().trim().email("Adresse email invalide").max(255, "Email trop long"),
   phone: z.string().trim().max(20, "Numéro trop long").optional(),
   subject: z.string().trim().min(1, "Veuillez entrer un sujet").max(200, "Sujet trop long"),
-  message: z
-    .string()
-    .trim()
-    .min(10, "Le message doit contenir au moins 10 caractères")
-    .max(2000, "Message trop long"),
-  _gotcha: z.string().optional(),
+  message: z.string().trim().min(10, "Le message doit contenir au moins 10 caractères").max(2000, "Message trop long"),
+  _gotcha: z.string().optional(), // honeypot
 });
 
 type ContactFormValues = z.infer<typeof contactSchema>;
@@ -38,7 +36,7 @@ const Contact = () => {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // "Time trap" anti-bot : si soumis trop vite, on ignore
+  // Time trap (anti-bot): empêche l'envoi trop rapide
   const openedAtRef = useRef<number>(Date.now());
 
   const form = useForm<ContactFormValues>({
@@ -53,80 +51,31 @@ const Contact = () => {
     },
   });
 
-  const onSubmit = async (data: ContactFormValues) => {
+  const onSubmit = async () => {
+    // Validation déjà faite par RHF + zod
     const secondsOpen = (Date.now() - openedAtRef.current) / 1000;
-    if (secondsOpen < 2.5) {
+
+    if (secondsOpen < 2) {
       toast({
-        title: "Erreur d'envoi",
+        title: "Envoi trop rapide",
         description: "Veuillez réessayer dans quelques secondes.",
         variant: "destructive",
       });
       return;
     }
 
-    if (data._gotcha && data._gotcha.trim().length > 0) {
-      form.reset();
-      toast({
-        title: "Message envoyé",
-        description: "Merci ! Je reviens vers vous rapidement.",
-      });
-      return;
-    }
-
-    if (!FORMSPREE_ENDPOINT || FORMSPREE_ENDPOINT.includes("xxxx")) {
-      toast({
-        title: "Configuration manquante",
-        description: "Veuillez configurer l'endpoint Formspree dans Contact.tsx.",
-        variant: "destructive",
-      });
-      return;
-    }
-
+    // On laisse ensuite le navigateur faire le POST vers Formspree
     setIsSubmitting(true);
 
-    try {
+    // Important: on déclenche manuellement la soumission du <form> HTML
+    // car react-hook-form intercepte l'event.
+    const formEl = document.getElementById("contact-form") as HTMLFormElement | null;
+    if (!formEl) return;
 
-      const fd = new FormData();
-      fd.append("name", data.name);
-      fd.append("email", data.email);
-      fd.append("phone", data.phone ?? "");
-      fd.append("subject", data.subject);
-      fd.append("message", data.message);
-
-      fd.append("_gotcha", data._gotcha ?? "");
-
-      fd.append("_format", "plain");
-
-
-      const res = await fetch(FORMSPREE_ENDPOINT, {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-        },
-        body: fd,
-      });
-
-      if (!res.ok) {
-        throw new Error("Formspree request failed");
-      }
-
-      form.reset();
-      openedAtRef.current = Date.now();
-
-      toast({
-        title: "Message envoyé",
-        description: "Merci ! Je vous répondrai dès que possible.",
-      });
-    } catch {
-      toast({
-        title: "Erreur d'envoi",
-        description: "Impossible d'envoyer le message. Réessayez plus tard.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
+    formEl.submit();
   };
+
+  const values = form.watch();
 
   return (
     <div className="min-h-screen bg-background">
@@ -148,15 +97,13 @@ const Contact = () => {
             <div className="grid md:grid-cols-3 gap-8">
               <div className="space-y-6">
                 <div className="bg-secondary/30 rounded-xl p-6 space-y-6">
-                  <h2 className="text-xl font-bold text-foreground">Mes coordonn��es</h2>
+                  <h2 className="text-xl font-bold text-foreground">Mes coordonnées</h2>
 
                   <div className="flex items-start gap-3">
                     <MapPin className="w-5 h-5 text-primary mt-1 shrink-0" />
                     <div>
                       <p className="font-medium text-foreground">Adresse</p>
-                      <p className="text-muted-foreground text-sm">
-                        Challes-les-Eaux, Savoie (73)
-                      </p>
+                      <p className="text-muted-foreground text-sm">Challes-les-Eaux, Savoie (73)</p>
                     </div>
                   </div>
 
@@ -164,10 +111,7 @@ const Contact = () => {
                     <Mail className="w-5 h-5 text-primary mt-1 shrink-0" />
                     <div>
                       <p className="font-medium text-foreground">Email</p>
-                      <a
-                        href="mailto:contact@elabsite.fr"
-                        className="text-primary text-sm hover:underline"
-                      >
+                      <a href="mailto:contact@elabsite.fr" className="text-primary text-sm hover:underline">
                         contact@elabsite.fr
                       </a>
                     </div>
@@ -177,10 +121,7 @@ const Contact = () => {
                     <Phone className="w-5 h-5 text-primary mt-1 shrink-0" />
                     <div>
                       <p className="font-medium text-foreground">Téléphone</p>
-                      <a
-                        href="tel:+33670453230"
-                        className="text-muted-foreground hover:text-primary transition-colors"
-                      >
+                      <a href="tel:+33670453230" className="text-muted-foreground hover:text-primary transition-colors">
                         +33 6 70 45 32 30
                       </a>
                     </div>
@@ -190,8 +131,19 @@ const Contact = () => {
 
               <div className="md:col-span-2 bg-card border border-border rounded-xl p-6 md:p-8">
                 <Form {...form}>
-                  <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
-                    {/* Honeypot (doit rester vide) */}
+                  {/* IMPORTANT: vrai POST HTML vers Formspree */}
+                  <form
+                    id="contact-form"
+                    action={FORMSPREE_ENDPOINT}
+                    method="POST"
+                    className="space-y-5"
+                    onSubmit={form.handleSubmit(onSubmit)}
+                  >
+                    {/* champs cachés Formspree */}
+                    <input type="hidden" name="_subject" value={`Contact - ${values.subject || ""}`} />
+                    <input type="hidden" name="_redirect" value={REDIRECT_URL} />
+
+                    {/* Honeypot anti-spam */}
                     <div
                       style={{
                         position: "absolute",
@@ -217,7 +169,8 @@ const Contact = () => {
                           <FormItem>
                             <FormLabel>Nom *</FormLabel>
                             <FormControl>
-                              <Input placeholder="Votre nom" {...field} />
+                              {/* name=... important pour le POST */}
+                              <Input placeholder="Votre nom" {...field} name="name" />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -231,7 +184,7 @@ const Contact = () => {
                           <FormItem>
                             <FormLabel>Email *</FormLabel>
                             <FormControl>
-                              <Input type="email" placeholder="votre@email.fr" {...field} />
+                              <Input type="email" placeholder="votre@email.fr" {...field} name="email" />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -247,7 +200,7 @@ const Contact = () => {
                           <FormItem>
                             <FormLabel>Téléphone</FormLabel>
                             <FormControl>
-                              <Input placeholder="06 XX XX XX XX" {...field} />
+                              <Input placeholder="06 XX XX XX XX" {...field} name="phone" />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -261,7 +214,7 @@ const Contact = () => {
                           <FormItem>
                             <FormLabel>Sujet *</FormLabel>
                             <FormControl>
-                              <Input placeholder="Objet de votre message" {...field} />
+                              <Input placeholder="Objet de votre message" {...field} name="subject" />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -280,6 +233,7 @@ const Contact = () => {
                               placeholder="Décrivez votre projet ou votre demande..."
                               rows={6}
                               {...field}
+                              name="message"
                             />
                           </FormControl>
                           <FormMessage />
@@ -287,12 +241,7 @@ const Contact = () => {
                       )}
                     />
 
-                    <Button
-                      type="submit"
-                      size="lg"
-                      className="w-full sm:w-auto"
-                      disabled={isSubmitting}
-                    >
+                    <Button type="submit" size="lg" className="w-full sm:w-auto" disabled={isSubmitting}>
                       <Send className="w-4 h-4 mr-2" />
                       {isSubmitting ? "Envoi en cours..." : "Envoyer le message"}
                     </Button>
