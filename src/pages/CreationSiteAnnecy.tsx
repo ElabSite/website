@@ -1,6 +1,19 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Check, Globe, Search, Shield, Zap, MapPin, Clock, Star, Users, ArrowRight, Monitor, Smartphone, BarChart3, Lock } from "lucide-react";
+import {
+  ArrowRight,
+  BarChart3,
+  Check,
+  Clock,
+  Globe,
+  Lock,
+  MapPin,
+  Monitor,
+  Search,
+  Shield,
+  Smartphone,
+  Star,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import Navbar from "@/components/Navbar";
@@ -10,32 +23,38 @@ const services = [
   {
     icon: Globe,
     title: "Site vitrine professionnel",
-    description: "Un site web sur mesure qui reflète votre image de marque et met en valeur vos services auprès de votre clientèle annécienne.",
+    description:
+      "Un site web sur mesure qui reflète votre image de marque et met en valeur vos services auprès de votre clientèle annécienne.",
   },
   {
     icon: Smartphone,
     title: "Design responsive & mobile-first",
-    description: "Votre site s'adapte parfaitement à tous les écrans pour toucher tous vos clients à Annecy et autour du lac.",
+    description:
+      "Votre site s'adapte parfaitement à tous les écrans pour toucher tous vos clients à Annecy et autour du lac.",
   },
   {
     icon: Search,
     title: "Référencement local Annecy",
-    description: "Optimisation SEO locale pour apparaître en haut des résultats Google quand vos clients cherchent vos services en Haute-Savoie.",
+    description:
+      "Optimisation SEO locale pour apparaître en haut des résultats Google quand vos clients cherchent vos services en Haute-Savoie.",
   },
   {
     icon: Shield,
     title: "Sécurité & performance",
-    description: "Certificat SSL, protection contre les attaques, temps de chargement optimisé pour une expérience utilisateur irréprochable.",
+    description:
+      "Certificat SSL, protection contre les attaques, temps de chargement optimisé pour une expérience utilisateur irréprochable.",
   },
   {
     icon: BarChart3,
     title: "Suivi & analytics",
-    description: "Intégration Google Analytics et Search Console pour suivre vos visiteurs et optimiser votre visibilité en continu.",
+    description:
+      "Intégration Google Analytics et Search Console pour suivre vos visiteurs et optimiser votre visibilité en continu.",
   },
   {
     icon: Lock,
     title: "RGPD & conformité",
-    description: "Site conforme au RGPD avec mentions légales, politique de confidentialité et gestion des cookies intégrées.",
+    description:
+      "Site conforme au RGPD avec mentions légales, politique de confidentialité et gestion des cookies intégrées.",
   },
 ];
 
@@ -50,23 +69,28 @@ const advantages = [
 const faqs = [
   {
     question: "Combien coûte la création d'un site internet à Annecy ?",
-    answer: "Mes tarifs commencent à 190€ TTC pour une page unique et à partir de 390€ TTC pour un site vitrine complet jusqu'à 5 pages. Des prix compétitifs adaptés aux entreprises d'Annecy et de Haute-Savoie.",
+    answer:
+      "Mes tarifs commencent à 190€ TTC pour une page unique et à partir de 390€ TTC pour un site vitrine complet jusqu'à 5 pages. Des prix compétitifs adaptés aux entreprises d'Annecy et de Haute-Savoie.",
   },
   {
     question: "Combien de temps faut-il pour créer un site web à Annecy ?",
-    answer: "Selon la formule choisie, votre site est livré en 7 jours (page unique), 15 jours (site vitrine) ou 21 jours (site vitrine+). Je respecte systématiquement mes délais.",
+    answer:
+      "Selon la formule choisie, votre site est livré en 7 jours (page unique), 15 jours (site vitrine) ou 21 jours (site vitrine+). Je respecte systématiquement mes délais.",
   },
   {
     question: "Mon site sera-t-il bien référencé sur Google à Annecy ?",
-    answer: "Oui, tous mes sites incluent une optimisation SEO locale ciblant Annecy et la Haute-Savoie : balises meta, données structurées, contenu optimisé et stratégie de mots-clés locaux.",
+    answer:
+      "Oui, tous mes sites incluent une optimisation SEO locale ciblant Annecy et la Haute-Savoie : balises meta, données structurées, contenu optimisé et stratégie de mots-clés locaux.",
   },
   {
     question: "Proposez-vous la maintenance du site après la création ?",
-    answer: "Absolument. Je propose des forfaits de maintenance à partir de 29€/mois incluant mises à jour de sécurité, sauvegardes, monitoring et support technique.",
+    answer:
+      "Absolument. Je propose des forfaits de maintenance à partir de 29€/mois incluant mises à jour de sécurité, sauvegardes, monitoring et support technique.",
   },
   {
     question: "Quels types d'entreprises accompagnez-vous à Annecy ?",
-    answer: "J'accompagne tous les professionnels : artisans, commerçants, professions libérales, PME, associations et auto-entrepreneurs d'Annecy et ses environs (Cran-Gevrier, Seynod, Meythet, Annecy-le-Vieux).",
+    answer:
+      "J'accompagne tous les professionnels : artisans, commerçants, professions libérales, PME, associations et auto-entrepreneurs d'Annecy et ses environs (Cran-Gevrier, Seynod, Meythet, Annecy-le-Vieux).",
   },
 ];
 
@@ -88,7 +112,7 @@ const CreationSiteAnnecy = () => {
     if (meta) {
       meta.setAttribute(
         "content",
-        "Création de site internet à Annecy par un ingénieur DevOps diplômé. Sites vitrine professionnels, référencement SEO local en Haute-Savoie. Devis gratuit sous 24h."
+        "Création de site internet à Annecy par un ingénieur DevOps diplômé. Sites vitrine professionnels, référencement SEO local en Haute-Savoie. Devis gratuit sous 24h.",
       );
     }
   }, []);
@@ -97,7 +121,8 @@ const CreationSiteAnnecy = () => {
     "@context": "https://schema.org",
     "@type": "ProfessionalService",
     name: "Elab'Site - Création site internet Annecy",
-    description: "Création de sites internet professionnels à Annecy, Haute-Savoie. Sites vitrine, référencement SEO local et maintenance.",
+    description:
+      "Création de sites internet professionnels à Annecy, Haute-Savoie. Sites vitrine, référencement SEO local et maintenance.",
     url: "https://www.elabsite.fr/creation-site-internet-annecy",
     telephone: "+33-XXX-XXX-XXX",
     email: "contact@elabsite.fr",
@@ -147,8 +172,14 @@ const CreationSiteAnnecy = () => {
     <>
       <Navbar />
       <main className="pt-16">
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+        />
 
         <header className="py-24 bg-accent/20">
           <div className="container mx-auto px-4 animate-fade-in">
@@ -157,14 +188,17 @@ const CreationSiteAnnecy = () => {
                 <MapPin className="w-4 h-4" />
                 Agence web à Annecy, Haute-Savoie
               </div>
+
               <h1 className="text-4xl md:text-6xl font-bold mb-6 text-foreground leading-tight">
                 Création de site internet à <span className="text-primary">Annecy</span>
               </h1>
+
               <p className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto">
-                Votre <strong>agence web à Annecy</strong> conçoit des sites vitrine professionnels, 
-                optimisés pour le <strong>référencement local en Haute-Savoie</strong>. Design sur mesure, 
-                performance et sécurité garantis.
+                Votre <strong>agence web à Annecy</strong> conçoit des sites vitrine professionnels, optimisés pour le{" "}
+                <strong>référencement local en Haute-Savoie</strong>. Design sur mesure, performance et sécurité
+                garantis.
               </p>
+
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button size="lg" className="text-lg px-8 py-6" asChild>
                   <Link to="/contact">
@@ -172,6 +206,7 @@ const CreationSiteAnnecy = () => {
                     <ArrowRight className="w-5 h-5 ml-2" />
                   </Link>
                 </Button>
+
                 <Button size="lg" variant="outline" className="text-lg px-8 py-6" asChild>
                   <Link to="/tarifs#simulateur">Estimer le prix</Link>
                 </Button>
@@ -205,20 +240,28 @@ const CreationSiteAnnecy = () => {
                 Mes services de création web à Annecy
               </h2>
               <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-                Une offre complète pour votre présence en ligne en Haute-Savoie : du design à l'hébergement, 
-                en passant par le référencement local.
+                Une offre complète pour votre présence en ligne en Haute-Savoie : du design à l'hébergement, en passant
+                par le référencement local.
               </p>
             </div>
 
+            {/* Services (centrés) */}
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
               {services.map((service) => (
-                <Card key={service.title} className="hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-                  <CardContent className="pt-6">
-                    <div className="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-4">
+                <Card
+                  key={service.title}
+                  className="hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+                >
+                  <CardContent className="pt-6 text-center">
+                    <div className="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-4 mx-auto">
                       <service.icon className="w-7 h-7 text-primary" />
                     </div>
-                    <h3 className="text-xl font-bold mb-2 text-foreground">{service.title}</h3>
-                    <p className="text-muted-foreground">{service.description}</p>
+
+                    <h3 className="text-xl font-bold mb-2 text-foreground text-center">
+                      {service.title}
+                    </h3>
+
+                    <p className="text-muted-foreground text-center">{service.description}</p>
                   </CardContent>
                 </Card>
               ))}
@@ -234,9 +277,9 @@ const CreationSiteAnnecy = () => {
                   Pourquoi choisir mon expertise web à Annecy ?
                 </h2>
                 <p className="text-muted-foreground text-lg mb-8">
-                  En tant qu'<strong>agence web intervenant à Annecy</strong>, je comprends les besoins 
-                  spécifiques des entreprises haut-savoyardes. Mon expertise d'ingénieur DevOps garantit 
-                  des sites performants, sécurisés et parfaitement référencés.
+                  En tant qu'<strong>agence web intervenant à Annecy</strong>, je comprends les besoins spécifiques des
+                  entreprises haut-savoyardes. Mon expertise d'ingénieur DevOps garantit des sites performants,
+                  sécurisés et parfaitement référencés.
                 </p>
                 <ul className="space-y-4">
                   {advantages.map((adv) => (
@@ -247,6 +290,7 @@ const CreationSiteAnnecy = () => {
                   ))}
                 </ul>
               </div>
+
               <div className="bg-card rounded-2xl p-8 shadow-lg">
                 <h3 className="text-2xl font-bold mb-4 text-foreground">Zones desservies</h3>
                 <p className="text-muted-foreground mb-6">
@@ -254,9 +298,16 @@ const CreationSiteAnnecy = () => {
                 </p>
                 <div className="grid grid-cols-2 gap-3">
                   {[
-                    "Annecy (74000)", "Cran-Gevrier", "Seynod", "Meythet",
-                    "Annecy-le-Vieux", "Pringy", "Argonay", "Thonon-les-Bains",
-                    "Évian-les-Bains", "Cluses",
+                    "Annecy (74000)",
+                    "Cran-Gevrier",
+                    "Seynod",
+                    "Meythet",
+                    "Annecy-le-Vieux",
+                    "Pringy",
+                    "Argonay",
+                    "Thonon-les-Bains",
+                    "Évian-les-Bains",
+                    "Cluses",
                   ].map((city) => (
                     <div key={city} className="flex items-center gap-2 text-sm text-muted-foreground">
                       <MapPin className="w-4 h-4 text-primary shrink-0" />
@@ -264,7 +315,9 @@ const CreationSiteAnnecy = () => {
                     </div>
                   ))}
                 </div>
-                <p className="text-sm text-muted-foreground mt-4 italic">…et bien d'autres villes en Haute-Savoie et alentours.</p>
+                <p className="text-sm text-muted-foreground mt-4 italic">
+                  …et bien d'autres villes en Haute-Savoie et alentours.
+                </p>
               </div>
             </div>
           </div>
@@ -278,13 +331,17 @@ const CreationSiteAnnecy = () => {
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto mb-12">
               Des prix transparents et compétitifs, adaptés aux budgets des entreprises d'Annecy et de Haute-Savoie.
             </p>
+
             <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
               {[
                 { name: "Page Unique", price: "190", desc: "Idéal auto-entrepreneurs" },
                 { name: "Site Vitrine", price: "390", desc: "PME & artisans", popular: true },
                 { name: "Site Vitrine+", price: "890", desc: "Entreprises exigeantes" },
               ].map((plan) => (
-                <Card key={plan.name} className={`text-center p-6 ${plan.popular ? "border-2 border-primary shadow-lg" : ""}`}>
+                <Card
+                  key={plan.name}
+                  className={`text-center p-6 ${plan.popular ? "border-2 border-primary shadow-lg" : ""}`}
+                >
                   {plan.popular && <div className="text-xs font-semibold text-primary mb-2">★ POPULAIRE</div>}
                   <h3 className="text-xl font-bold text-foreground mb-1">{plan.name}</h3>
                   <p className="text-sm text-muted-foreground mb-4">{plan.desc}</p>
@@ -293,6 +350,7 @@ const CreationSiteAnnecy = () => {
                 </Card>
               ))}
             </div>
+
             <Button size="lg" className="mt-8 text-lg px-8 py-6" asChild>
               <Link to="/tarifs">Voir tous les tarifs détaillés</Link>
             </Button>
@@ -305,12 +363,15 @@ const CreationSiteAnnecy = () => {
               <h2 id="faq-annecy" className="text-3xl md:text-4xl font-bold mb-12 text-foreground text-center">
                 Questions fréquentes – Création site web Annecy
               </h2>
+
               <div className="space-y-6">
                 {faqs.map((faq) => (
                   <details key={faq.question} className="group bg-card rounded-xl p-6 shadow-sm">
                     <summary className="font-bold text-foreground cursor-pointer list-none flex items-center justify-between">
                       <h3 className="text-lg pr-4">{faq.question}</h3>
-                      <span className="text-primary text-2xl shrink-0 group-open:rotate-45 transition-transform">+</span>
+                      <span className="text-primary text-2xl shrink-0 group-open:rotate-45 transition-transform">
+                        +
+                      </span>
                     </summary>
                     <p className="mt-4 text-muted-foreground leading-relaxed">{faq.answer}</p>
                   </details>
@@ -324,7 +385,12 @@ const CreationSiteAnnecy = () => {
           <div className="container mx-auto px-4">
             <div className="flex flex-wrap gap-2 justify-center">
               {localKeywords.map((kw) => (
-                <span key={kw} className="bg-secondary/50 text-muted-foreground text-xs px-3 py-1 rounded-full">{kw}</span>
+                <span
+                  key={kw}
+                  className="bg-secondary/50 text-muted-foreground text-xs px-3 py-1 rounded-full"
+                >
+                  {kw}
+                </span>
               ))}
             </div>
           </div>
@@ -338,7 +404,13 @@ const CreationSiteAnnecy = () => {
             <p className="text-xl opacity-90 mb-8 max-w-2xl mx-auto">
               Contactez-moi pour un devis gratuit et personnalisé. Réponse garantie sous 48h.
             </p>
-            <Button size="lg" variant="secondary" className="text-lg px-8 py-6 hover:scale-105 transition-transform" asChild>
+
+            <Button
+              size="lg"
+              variant="secondary"
+              className="text-lg px-8 py-6 hover:scale-105 transition-transform"
+              asChild
+            >
               <Link to="/contact">Demander mon devis gratuit</Link>
             </Button>
           </div>
