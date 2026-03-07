@@ -1,6 +1,19 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Check, Globe, Search, Shield, Zap, MapPin, Clock, Star, Users, ArrowRight, Monitor, Smartphone, BarChart3, Lock } from "lucide-react";
+import {
+  ArrowRight,
+  BarChart3,
+  Check,
+  Clock,
+  Globe,
+  Lock,
+  MapPin,
+  Monitor,
+  Search,
+  Shield,
+  Smartphone,
+  Star,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import Navbar from "@/components/Navbar";
@@ -10,32 +23,38 @@ const services = [
   {
     icon: Globe,
     title: "Site vitrine professionnel",
-    description: "Un site internet sur mesure conçu pour valoriser votre activité auprès de la clientèle grenobloise et iséroise.",
+    description:
+      "Un site internet sur mesure conçu pour valoriser votre activité auprès de la clientèle grenobloise et iséroise.",
   },
   {
     icon: Smartphone,
     title: "Design responsive & mobile-first",
-    description: "Votre site s'adapte à tous les écrans pour capter les clients de Grenoble, que ce soit sur mobile, tablette ou desktop.",
+    description:
+      "Votre site s'adapte à tous les écrans pour capter les clients de Grenoble, que ce soit sur mobile, tablette ou desktop.",
   },
   {
     icon: Search,
     title: "Référencement local Grenoble",
-    description: "Stratégie SEO locale pour positionner votre site en tête des résultats Google dans l'agglomération grenobloise et en Isère.",
+    description:
+      "Stratégie SEO locale pour positionner votre site en tête des résultats Google dans l'agglomération grenobloise et en Isère.",
   },
   {
     icon: Shield,
     title: "Sécurité & hébergement",
-    description: "Certificat SSL, protection DDoS et hébergement haute performance pour un site rapide et sécurisé.",
+    description:
+      "Certificat SSL, protection DDoS et hébergement haute performance pour un site rapide et sécurisé.",
   },
   {
     icon: BarChart3,
     title: "Analytics & conversion",
-    description: "Suivi des performances avec Google Analytics, optimisation du taux de conversion et reporting mensuel.",
+    description:
+      "Suivi des performances avec Google Analytics, optimisation du taux de conversion et reporting mensuel.",
   },
   {
     icon: Lock,
     title: "Conformité RGPD",
-    description: "Site 100% conforme au RGPD : mentions légales, politique de cookies et formulaires sécurisés.",
+    description:
+      "Site 100% conforme au RGPD : mentions légales, politique de cookies et formulaires sécurisés.",
   },
 ];
 
@@ -50,23 +69,28 @@ const advantages = [
 const faqs = [
   {
     question: "Quel est le prix d'un site internet à Grenoble ?",
-    answer: "Mes offres démarrent à 190€ TTC pour une page unique professionnelle et à 390€ TTC pour un site vitrine complet (5 pages). Mes tarifs sont parmi les plus compétitifs de l'agglomération grenobloise.",
+    answer:
+      "Mes offres démarrent à 190€ TTC pour une page unique professionnelle et à 390€ TTC pour un site vitrine complet (5 pages). Mes tarifs sont parmi les plus compétitifs de l'agglomération grenobloise.",
   },
   {
     question: "En combien de temps mon site sera-t-il en ligne à Grenoble ?",
-    answer: "Je livre votre site en 7 jours (page unique), 15 jours (site vitrine standard) ou 21 jours (site vitrine + mini-boutique).",
+    answer:
+      "Je livre votre site en 7 jours (page unique), 15 jours (site vitrine standard) ou 21 jours (site vitrine + mini-boutique).",
   },
   {
     question: "Comment être bien référencé sur Google à Grenoble ?",
-    answer: "J'applique une stratégie SEO locale complète : optimisation des balises, données structurées, Google Business Profile, contenu ciblé sur Grenoble et l'Isère, et maillage interne optimisé.",
+    answer:
+      "J'applique une stratégie SEO locale complète : optimisation des balises, données structurées, Google Business Profile, contenu ciblé sur Grenoble et l'Isère, et maillage interne optimisé.",
   },
   {
     question: "Assurez-vous la maintenance des sites internet ?",
-    answer: "Oui, je propose des forfaits de maintenance dès 29€/mois : mises à jour, sauvegardes, monitoring 24/7 et support technique réactif pour les entreprises grenobloises.",
+    answer:
+      "Oui, je propose des forfaits de maintenance dès 29€/mois : mises à jour, sauvegardes, monitoring 24/7 et support technique réactif pour les entreprises grenobloises.",
   },
   {
     question: "Quels secteurs d'activité accompagnez-vous à Grenoble ?",
-    answer: "Je travaille avec tous les professionnels : startups, PME, artisans, professions libérales, commerces et associations de Grenoble, Échirolles, Saint-Martin-d'Hères, Meylan et toute l'Isère.",
+    answer:
+      "Je travaille avec tous les professionnels : startups, PME, artisans, professions libérales, commerces et associations de Grenoble, Échirolles, Saint-Martin-d'Hères, Meylan et toute l'Isère.",
   },
 ];
 
@@ -88,7 +112,7 @@ const CreationSiteGrenoble = () => {
     if (meta) {
       meta.setAttribute(
         "content",
-        "Création de site internet à Grenoble par une agence web. Sites vitrine, SEO local Isère, design responsive. Devis gratuit sous 24h."
+        "Création de site internet à Grenoble par une agence web. Sites vitrine, SEO local Isère, design responsive. Devis gratuit sous 24h.",
       );
     }
   }, []);
@@ -97,7 +121,8 @@ const CreationSiteGrenoble = () => {
     "@context": "https://schema.org",
     "@type": "ProfessionalService",
     name: "Elab'Site - Création site internet Grenoble",
-    description: "Agence web spécialisée dans la création de sites internet professionnels à Grenoble, Isère. Sites vitrine, référencement SEO local et maintenance.",
+    description:
+      "Agence web spécialisée dans la création de sites internet professionnels à Grenoble, Isère. Sites vitrine, référencement SEO local et maintenance.",
     url: "https://www.elabsite.fr/creation-site-internet-grenoble",
     telephone: "+336-70-45-32-30",
     email: "contact@elabsite.fr",
@@ -146,8 +171,14 @@ const CreationSiteGrenoble = () => {
     <>
       <Navbar />
       <main className="pt-16">
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+        />
 
         <header className="py-24 bg-accent/20">
           <div className="container mx-auto px-4 animate-fade-in">
@@ -156,14 +187,17 @@ const CreationSiteGrenoble = () => {
                 <MapPin className="w-4 h-4" />
                 Agence web pour Grenoble, Isère
               </div>
+
               <h1 className="text-4xl md:text-6xl font-bold mb-6 text-foreground leading-tight">
                 Création de site internet à <span className="text-primary">Grenoble</span>
               </h1>
+
               <p className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto">
-                Votre <strong>agence web pour Grenoble</strong> crée des sites vitrine professionnels, 
-                optimisés pour le <strong>référencement local en Isère</strong>. Performance, sécurité 
-                et design sur mesure pour votre entreprise grenobloise.
+                Votre <strong>agence web Grenoble</strong> crée des sites vitrine professionnels, optimisés pour le{" "}
+                <strong>référencement local en Isère</strong>. Performance, sécurité et design sur mesure pour votre
+                entreprise grenobloise.
               </p>
+
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button size="lg" className="text-lg px-8 py-6" asChild>
                   <Link to="/contact">
@@ -171,6 +205,7 @@ const CreationSiteGrenoble = () => {
                     <ArrowRight className="w-5 h-5 ml-2" />
                   </Link>
                 </Button>
+
                 <Button size="lg" variant="outline" className="text-lg px-8 py-6" asChild>
                   <Link to="/tarifs#simulateur">Estimer le prix</Link>
                 </Button>
@@ -183,7 +218,7 @@ const CreationSiteGrenoble = () => {
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-2 md:grid-cols-3 gap-8 text-center">
               {[
-                //{ icon: Users, value: "50+", label: "Clients Rhône-Alpes" },
+                // { icon: Users, value: "50+", label: "Clients Rhône-Alpes" },
                 { icon: Star, value: "5/5", label: "Satisfaction client" },
                 { icon: Clock, value: "7 jours", label: "Livraison express" },
                 { icon: Monitor, value: "100%", label: "Sites responsive" },
@@ -205,20 +240,28 @@ const CreationSiteGrenoble = () => {
                 Mes services de création web pour Grenoble
               </h2>
               <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-                Une offre complète pour les entreprises grenobloises : conception, développement, 
-                référencement local et maintenance de votre site internet.
+                Une offre complète pour les entreprises grenobloises : conception, développement, référencement local et
+                maintenance de votre site internet.
               </p>
             </div>
 
+            {/* Services (centrés) */}
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
               {services.map((service) => (
-                <Card key={service.title} className="hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-                  <CardContent className="pt-6">
-                    <div className="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-4">
+                <Card
+                  key={service.title}
+                  className="hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+                >
+                  <CardContent className="pt-6 text-center">
+                    <div className="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-4 mx-auto">
                       <service.icon className="w-7 h-7 text-primary" />
                     </div>
-                    <h3 className="text-xl font-bold mb-2 text-foreground">{service.title}</h3>
-                    <p className="text-muted-foreground">{service.description}</p>
+
+                    <h3 className="text-xl font-bold mb-2 text-foreground text-center">
+                      {service.title}
+                    </h3>
+
+                    <p className="text-muted-foreground text-center">{service.description}</p>
                   </CardContent>
                 </Card>
               ))}
@@ -234,9 +277,8 @@ const CreationSiteGrenoble = () => {
                   Pourquoi faire appel à mon expertise pour Grenoble ?
                 </h2>
                 <p className="text-muted-foreground text-lg mb-8">
-                  Mon <strong>expertise du marché grenoblois</strong> et ma connaissance de l'écosystème 
-                  entrepreneurial isérois me permettent de créer des sites parfaitement adaptés 
-                  à votre cible locale.
+                  Mon <strong>expertise du marché grenoblois</strong> et ma connaissance de l'écosystème entrepreneurial
+                  isérois me permettent de créer des sites parfaitement adaptés à votre cible locale.
                 </p>
                 <ul className="space-y-4">
                   {advantages.map((adv) => (
@@ -247,6 +289,7 @@ const CreationSiteGrenoble = () => {
                   ))}
                 </ul>
               </div>
+
               <div className="bg-card rounded-2xl p-8 shadow-lg">
                 <h3 className="text-2xl font-bold mb-4 text-foreground">Zones desservies</h3>
                 <p className="text-muted-foreground mb-6">
@@ -254,9 +297,16 @@ const CreationSiteGrenoble = () => {
                 </p>
                 <div className="grid grid-cols-2 gap-3">
                   {[
-                    "Grenoble (38000)", "Échirolles", "Saint-Martin-d'Hères", "Meylan",
-                    "Fontaine", "Seyssinet-Pariset", "Voiron", "Bourgoin-Jallieu",
-                    "Vienne", "Villefontaine",
+                    "Grenoble (38000)",
+                    "Échirolles",
+                    "Saint-Martin-d'Hères",
+                    "Meylan",
+                    "Fontaine",
+                    "Seyssinet-Pariset",
+                    "Voiron",
+                    "Bourgoin-Jallieu",
+                    "Vienne",
+                    "Villefontaine",
                   ].map((city) => (
                     <div key={city} className="flex items-center gap-2 text-sm text-muted-foreground">
                       <MapPin className="w-4 h-4 text-primary shrink-0" />
@@ -264,7 +314,9 @@ const CreationSiteGrenoble = () => {
                     </div>
                   ))}
                 </div>
-                <p className="text-sm text-muted-foreground mt-4 italic">…et bien d'autres villes en Isère et alentours.</p>
+                <p className="text-sm text-muted-foreground mt-4 italic">
+                  …et bien d'autres villes en Isère et alentours.
+                </p>
               </div>
             </div>
           </div>
@@ -278,13 +330,17 @@ const CreationSiteGrenoble = () => {
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto mb-12">
               Des prix transparents, adaptés aux entreprises grenobloises, sans surprise ni frais cachés.
             </p>
+
             <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
               {[
                 { name: "Page Unique", price: "190", desc: "Auto-entrepreneurs & indépendants" },
                 { name: "Site Vitrine", price: "390", desc: "PME & commerces grenoblois", popular: true },
-                { name: "Site Vitrine+", price: "890", desc: "Entreprises & startups" },
+                { name: "Site Vitrine + mini-boutique", price: "890", desc: "Activité de vente en ligne" },
               ].map((plan) => (
-                <Card key={plan.name} className={`text-center p-6 ${plan.popular ? "border-2 border-primary shadow-lg" : ""}`}>
+                <Card
+                  key={plan.name}
+                  className={`text-center p-6 ${plan.popular ? "border-2 border-primary shadow-lg" : ""}`}
+                >
                   {plan.popular && <div className="text-xs font-semibold text-primary mb-2">★ POPULAIRE</div>}
                   <h3 className="text-xl font-bold text-foreground mb-1">{plan.name}</h3>
                   <p className="text-sm text-muted-foreground mb-4">{plan.desc}</p>
@@ -293,6 +349,7 @@ const CreationSiteGrenoble = () => {
                 </Card>
               ))}
             </div>
+
             <Button size="lg" className="mt-8 text-lg px-8 py-6" asChild>
               <Link to="/tarifs">Voir tous les tarifs détaillés</Link>
             </Button>
@@ -305,12 +362,15 @@ const CreationSiteGrenoble = () => {
               <h2 id="faq-grenoble" className="text-3xl md:text-4xl font-bold mb-12 text-foreground text-center">
                 Questions fréquentes – Création site web Grenoble
               </h2>
+
               <div className="space-y-6">
                 {faqs.map((faq) => (
                   <details key={faq.question} className="group bg-card rounded-xl p-6 shadow-sm">
                     <summary className="font-bold text-foreground cursor-pointer list-none flex items-center justify-between">
                       <h3 className="text-lg pr-4">{faq.question}</h3>
-                      <span className="text-primary text-2xl shrink-0 group-open:rotate-45 transition-transform">+</span>
+                      <span className="text-primary text-2xl shrink-0 group-open:rotate-45 transition-transform">
+                        +
+                      </span>
                     </summary>
                     <p className="mt-4 text-muted-foreground leading-relaxed">{faq.answer}</p>
                   </details>
@@ -324,7 +384,12 @@ const CreationSiteGrenoble = () => {
           <div className="container mx-auto px-4">
             <div className="flex flex-wrap gap-2 justify-center">
               {localKeywords.map((kw) => (
-                <span key={kw} className="bg-secondary/50 text-muted-foreground text-xs px-3 py-1 rounded-full">{kw}</span>
+                <span
+                  key={kw}
+                  className="bg-secondary/50 text-muted-foreground text-xs px-3 py-1 rounded-full"
+                >
+                  {kw}
+                </span>
               ))}
             </div>
           </div>
@@ -338,7 +403,13 @@ const CreationSiteGrenoble = () => {
             <p className="text-xl opacity-90 mb-8 max-w-2xl mx-auto">
               Obtenez un devis gratuit et personnalisé pour votre projet web. Réponse sous 48h garantie.
             </p>
-            <Button size="lg" variant="secondary" className="text-lg px-8 py-6 hover:scale-105 transition-transform">
+
+            <Button
+              size="lg"
+              variant="secondary"
+              className="text-lg px-8 py-6 hover:scale-105 transition-transform"
+              asChild
+            >
               <Link to="/contact">Demander un devis gratuit</Link>
             </Button>
           </div>
