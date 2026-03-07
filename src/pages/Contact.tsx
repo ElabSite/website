@@ -19,7 +19,6 @@ import {
 import { useToast } from "@/hooks/use-toast";
 
 const FORMSPREE_ENDPOINT = "https://formspree.io/f/xkoqgrqw";
-const REDIRECT_URL = "/merci";
 
 const contactSchema = z.object({
   name: z.string().trim().min(1, "Veuillez entrer votre nom").max(100, "Nom trop long"),
@@ -27,7 +26,8 @@ const contactSchema = z.object({
   phone: z.string().trim().max(20, "Numéro trop long").optional(),
   subject: z.string().trim().min(1, "Veuillez entrer un sujet").max(200, "Sujet trop long"),
   message: z.string().trim().min(10, "Le message doit contenir au moins 10 caractères").max(2000, "Message trop long"),
-  _gotcha: z.string().optional(), // honeypot
+  // honeypot
+  _gotcha: z.string().optional(),
 });
 
 type ContactFormValues = z.infer<typeof contactSchema>;
@@ -36,7 +36,7 @@ const Contact = () => {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Time trap (anti-bot): empêche l'envoi trop rapide
+  // time trap anti-bot
   const openedAtRef = useRef<number>(Date.now());
 
   const form = useForm<ContactFormValues>({
@@ -49,13 +49,15 @@ const Contact = () => {
       message: "",
       _gotcha: "",
     },
+    mode: "onSubmit",
   });
 
-  const onSubmit = async () => {
-    // Validation déjà faite par RHF + zod
-    const secondsOpen = (Date.now() - openedAtRef.current) / 1000;
 
+  const onSubmitCapture: React.FormEventHandler<HTMLFormElement> = async (e) => {
+    // 1) Anti-bot: trop rapide
+    const secondsOpen = (Date.now() - openedAtRef.current) / 1000;
     if (secondsOpen < 2) {
+      e.preventDefault();
       toast({
         title: "Envoi trop rapide",
         description: "Veuillez réessayer dans quelques secondes.",
@@ -64,18 +66,29 @@ const Contact = () => {
       return;
     }
 
-    // On laisse ensuite le navigateur faire le POST vers Formspree
+    // 2) Validation RHF + Zod
+    const ok = await form.trigger();
+    if (!ok) {
+      e.preventDefault();
+      return;
+    }
+
+    // 3) Honeypot
+    const gotcha = form.getValues("_gotcha")?.trim();
+    if (gotcha) {
+      // on bloque discrètement (comme si succès)
+      e.preventDefault();
+      form.reset();
+      toast({
+        title: "Message envoyé",
+        description: "Merci ! Je reviens vers vous rapidement.",
+      });
+      return;
+    }
+
+    // 4) OK: on laisse le POST HTML se faire
     setIsSubmitting(true);
-
-    // Important: on déclenche manuellement la soumission du <form> HTML
-    // car react-hook-form intercepte l'event.
-    const formEl = document.getElementById("contact-form") as HTMLFormElement | null;
-    if (!formEl) return;
-
-    formEl.submit();
   };
-
-  const values = form.watch();
 
   return (
     <div className="min-h-screen bg-background">
@@ -131,19 +144,16 @@ const Contact = () => {
 
               <div className="md:col-span-2 bg-card border border-border rounded-xl p-6 md:p-8">
                 <Form {...form}>
-                  {/* IMPORTANT: vrai POST HTML vers Formspree */}
                   <form
-                    id="contact-form"
                     action={FORMSPREE_ENDPOINT}
                     method="POST"
                     className="space-y-5"
-                    onSubmit={form.handleSubmit(onSubmit)}
+                    onSubmitCapture={onSubmitCapture}
                   >
-                    {/* champs cachés Formspree */}
-                    <input type="hidden" name="_subject" value={`Contact - ${values.subject || ""}`} />
-                    <input type="hidden" name="_redirect" value={REDIRECT_URL} />
+                    {/* Optionnel (Formspree) */}
+                    <input type="hidden" name="_subject" value="Nouveau message - Elab'Site" />
 
-                    {/* Honeypot anti-spam */}
+                    {/* Honeypot: doit rester vide */}
                     <div
                       style={{
                         position: "absolute",
@@ -169,14 +179,12 @@ const Contact = () => {
                           <FormItem>
                             <FormLabel>Nom *</FormLabel>
                             <FormControl>
-                              {/* name=... important pour le POST */}
                               <Input placeholder="Votre nom" {...field} name="name" />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
                         )}
                       />
-
                       <FormField
                         control={form.control}
                         name="email"
@@ -206,7 +214,6 @@ const Contact = () => {
                           </FormItem>
                         )}
                       />
-
                       <FormField
                         control={form.control}
                         name="subject"
