@@ -45,7 +45,6 @@ const advantages = [
   "Accompagnement dédié du brief au lancement",
   "Tarifs compétitifs sans intermédiaire",
   "Livraison rapide en 7 à 21 jours",
-  "Support technique et maintenance continue",
 ];
 
 const faqs = [
@@ -55,7 +54,7 @@ const faqs = [
   },
   {
     question: "En combien de temps mon site sera-t-il en ligne à Grenoble ?",
-    answer: "Je livre votre site en 7 jours (page unique), 15 jours (site vitrine standard) ou 21 jours (site vitrine+). Chaque projet suit un planning précis communiqué dès la validation du devis.",
+    answer: "Je livre votre site en 7 jours (page unique), 15 jours (site vitrine standard) ou 21 jours (site vitrine + mini-boutique).",
   },
   {
     question: "Comment être bien référencé sur Google à Grenoble ?",
@@ -84,12 +83,12 @@ const localKeywords = [
 
 const CreationSiteGrenoble = () => {
   useEffect(() => {
-    document.title = "Création site internet Grenoble | Expert web Isère | Elab'Site";
+    document.title = "Création site internet Grenoble | Agence web Isère | Elab'Site";
     const meta = document.querySelector('meta[name="description"]');
     if (meta) {
       meta.setAttribute(
         "content",
-        "Création de site internet à Grenoble par un expert web. Sites vitrine, SEO local Isère, design responsive. Devis gratuit sous 24h."
+        "Création de site internet à Grenoble par une agence web. Sites vitrine, SEO local Isère, design responsive. Devis gratuit sous 24h."
       );
     }
   }, []);
@@ -98,9 +97,9 @@ const CreationSiteGrenoble = () => {
     "@context": "https://schema.org",
     "@type": "ProfessionalService",
     name: "Elab'Site - Création site internet Grenoble",
-    description: "Expert web spécialisé dans la création de sites internet professionnels à Grenoble, Isère. Sites vitrine, référencement SEO local et maintenance.",
+    description: "Agence web spécialisée dans la création de sites internet professionnels à Grenoble, Isère. Sites vitrine, référencement SEO local et maintenance.",
     url: "https://www.elabsite.fr/creation-site-internet-grenoble",
-    telephone: "+33-XXX-XXX-XXX",
+    telephone: "+336-70-45-32-30",
     email: "contact@elabsite.fr",
     address: {
       "@type": "PostalAddress",
@@ -155,13 +154,13 @@ const CreationSiteGrenoble = () => {
             <div className="max-w-4xl mx-auto text-center">
               <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-semibold mb-6">
                 <MapPin className="w-4 h-4" />
-                Expert web pour Grenoble, Isère
+                Agence web pour Grenoble, Isère
               </div>
               <h1 className="text-4xl md:text-6xl font-bold mb-6 text-foreground leading-tight">
                 Création de site internet à <span className="text-primary">Grenoble</span>
               </h1>
               <p className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto">
-                Votre <strong>expert web pour Grenoble</strong> crée des sites vitrine professionnels, 
+                Votre <strong>agence web pour Grenoble</strong> crée des sites vitrine professionnels, 
                 optimisés pour le <strong>référencement local en Isère</strong>. Performance, sécurité 
                 et design sur mesure pour votre entreprise grenobloise.
               </p>
@@ -182,9 +181,9 @@ const CreationSiteGrenoble = () => {
 
         <section className="py-12 border-b border-border">
           <div className="container mx-auto px-4">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-8 text-center">
               {[
-                { icon: Users, value: "50+", label: "Clients Rhône-Alpes" },
+                //{ icon: Users, value: "50+", label: "Clients Rhône-Alpes" },
                 { icon: Star, value: "5/5", label: "Satisfaction client" },
                 { icon: Clock, value: "7 jours", label: "Livraison express" },
                 { icon: Monitor, value: "100%", label: "Sites responsive" },
