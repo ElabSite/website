@@ -172,7 +172,7 @@ const CreationSiteGrenoble = () => {
                   </Link>
                 </Button>
                 <Button size="lg" variant="outline" className="text-lg px-8 py-6" asChild>
-                  <Link to="/realisations">Voir mes réalisations</Link>
+                  <Link to="/tarifs#simulateur">Estimer le prix</Link>
                 </Button>
               </div>
             </div>
@@ -336,10 +336,10 @@ const CreationSiteGrenoble = () => {
               Lancez votre site internet à Grenoble dès maintenant
             </h2>
             <p className="text-xl opacity-90 mb-8 max-w-2xl mx-auto">
-              Obtenez un devis gratuit et personnalisé pour votre projet web. Réponse sous 24h garantie.
+              Obtenez un devis gratuit et personnalisé pour votre projet web. Réponse sous 48h garantie.
             </p>
             <Button size="lg" variant="secondary" className="text-lg px-8 py-6 hover:scale-105 transition-transform">
-              Demander mon devis gratuit
+              <Link to="/contact">Demander un devis gratuit</Link>
             </Button>
           </div>
         </section>
