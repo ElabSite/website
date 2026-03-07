@@ -175,7 +175,7 @@ const Tarifs = () => {
                       className="w-full"
                       variant={plan.popular ? "default" : "outline"}
                     >
-                      Demander un devis
+                      <Link to="/contact">Demander un devis</Link>
                     </Button>
                   </CardContent>
                 </Card>
@@ -221,7 +221,7 @@ const Tarifs = () => {
                       ))}
                     </ul>
                     <Button variant="outline" className="w-full">
-                      Souscrire
+                      <Link to="/contact">Souscrire</Link>
                     </Button>
                   </CardContent>
                 </Card>
