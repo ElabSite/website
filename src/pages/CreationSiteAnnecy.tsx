@@ -75,7 +75,7 @@ const faqs = [
   {
     question: "Combien de temps faut-il pour créer un site web à Annecy ?",
     answer:
-      "Selon la formule choisie, votre site est livré en 7 jours (page unique), 15 jours (site vitrine) ou 21 jours (site vitrine+). Je respecte systématiquement mes délais.",
+      "Selon la formule choisie, votre site est livré en 7 jours (page unique), 15 jours (site vitrine) ou 21 jours (site vitrine + mini-boutique). Je respecte systématiquement mes délais.",
   },
   {
     question: "Mon site sera-t-il bien référencé sur Google à Annecy ?",
@@ -112,7 +112,7 @@ const CreationSiteAnnecy = () => {
     if (meta) {
       meta.setAttribute(
         "content",
-        "Création de site internet à Annecy par un ingénieur DevOps diplômé. Sites vitrine professionnels, référencement SEO local en Haute-Savoie. Devis gratuit sous 24h.",
+        "Création de site internet à Annecy par un ingénieur DevOps diplômé. Sites vitrine professionnels, référencement SEO local en Haute-Savoie. Devis gratuit sous 48h.",
       );
     }
   }, []);
@@ -124,7 +124,7 @@ const CreationSiteAnnecy = () => {
     description:
       "Création de sites internet professionnels à Annecy, Haute-Savoie. Sites vitrine, référencement SEO local et maintenance.",
     url: "https://www.elabsite.fr/creation-site-internet-annecy",
-    telephone: "+33-XXX-XXX-XXX",
+    telephone: "+336-70-45-32-30",
     email: "contact@elabsite.fr",
     address: {
       "@type": "PostalAddress",
