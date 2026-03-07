@@ -26,7 +26,7 @@ const Footer = () => {
                 <Phone className="w-5 h-5 text-primary" />
                 <a
                   href="tel:+33670453230"
-                  className="underline underline-offset-4 hover:text-primary transition-colors"
+                  className="hover:text-primary transition-colors"
                 >
                   +33 6 70 45 32 30
                 </a>
@@ -36,7 +36,7 @@ const Footer = () => {
                 <Mail className="w-5 h-5 text-primary" />
                 <a
                   href="mailto:contact@elabsite.fr"
-                  className="underline underline-offset-4 hover:text-primary transition-colors"
+                  className="hover:text-primary transition-colors"
                 >
                   contact@elabsite.fr
                 </a>
