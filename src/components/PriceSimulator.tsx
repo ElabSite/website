@@ -12,21 +12,14 @@ import {
   Shield,
   User,
   Mail,
+  Send,
 } from "lucide-react";
 
-type Step =
-  | "pages"
-  | "pagesList"
-  | "autonomy"
-  | "features"
-  | "extras"
-  | "contact"
-  | "result";
+type Step = "pages" | "pagesList" | "autonomy" | "features" | "extras" | "contact" | "result";
 
 const BASE_PRICE_ONE_PAGE = 190;
 const PRICE_PER_EXTRA_PAGE = 100;
 const AUTONOMY_PRICE = 200;
-
 
 const FORMSPREE_ENDPOINT = "https://formspree.io/f/xkoqgrqw";
 
@@ -84,7 +77,7 @@ const PriceSimulator = () => {
   const [contactEmail, setContactEmail] = useState("");
   const [contactErrors, setContactErrors] = useState<{ name?: string; email?: string }>({});
 
-  // Envoi Formspree à la fin
+  // Envoi Formspree sur l’étape résultat
   const [isSending, setIsSending] = useState(false);
   const [hasSent, setHasSent] = useState(false);
 
@@ -117,11 +110,9 @@ const PriceSimulator = () => {
     return customPages;
   };
 
-  // For 5-page pack, accueil is always included + 4 other pages are free (except blog +100€)
   const isPageFreeIn5Pack = (pageId: string) => {
     if (pageCount !== "5") return false;
     if (pageId === "accueil") return true;
-    // Blog always costs extra even in 5-page pack
     if (pageId === "blog") return false;
     return true;
   };
@@ -135,13 +126,10 @@ const PriceSimulator = () => {
   const calculatePrice = () => {
     let total = BASE_PRICE_ONE_PAGE;
 
-    // Pages
     const extraPages = selectedPages.filter((p) => p !== "accueil");
     if (pageCount === "5") {
-      // In 5-page pack, all pages free except blog
       extraPages.forEach((pId) => {
         if (pId === "blog") total += 100;
-        // other pages are included
       });
     } else if (pageCount === "custom") {
       total += extraPages.length * PRICE_PER_EXTRA_PAGE;
@@ -161,8 +149,6 @@ const PriceSimulator = () => {
 
     return total;
   };
-
-  const maxPages = getEffectivePageCount();
 
   const next = () => {
     if (currentIndex < steps.length - 1) {
@@ -200,14 +186,7 @@ const PriceSimulator = () => {
     setCustomPages(7);
     setSelectedPages(["accueil"]);
     setWantsAutonomy(false);
-    setSelectedFeatures([
-      "form-contact",
-      "seo",
-      "google-maps",
-      "social",
-      "cookie-banner",
-      "speed-opti",
-    ]);
+    setSelectedFeatures(["form-contact", "seo", "google-maps", "social", "cookie-banner", "speed-opti"]);
     setSelectedExtras([]);
     setContactName("");
     setContactEmail("");
@@ -216,22 +195,18 @@ const PriceSimulator = () => {
     setHasSent(false);
   };
 
+  const maxPages = getEffectivePageCount();
+
   const selectedPagesLabels = useMemo(() => {
-    return selectedPages
-      .map((id) => pageOptions.find((p) => p.id === id)?.label ?? id)
-      .join(", ");
+    return selectedPages.map((id) => pageOptions.find((p) => p.id === id)?.label ?? id).join(", ");
   }, [selectedPages]);
 
   const selectedFeaturesLabels = useMemo(() => {
-    return selectedFeatures
-      .map((id) => featureOptions.find((f) => f.id === id)?.label ?? id)
-      .join(", ");
+    return selectedFeatures.map((id) => featureOptions.find((f) => f.id === id)?.label ?? id).join(", ");
   }, [selectedFeatures]);
 
   const selectedExtrasLabels = useMemo(() => {
-    return selectedExtras
-      .map((id) => extraOptions.find((e) => e.id === id)?.label ?? id)
-      .join(", ");
+    return selectedExtras.map((id) => extraOptions.find((e) => e.id === id)?.label ?? id).join(", ");
   }, [selectedExtras]);
 
   const buildEstimateMessage = () => {
@@ -265,8 +240,10 @@ const PriceSimulator = () => {
       `Nom / Entreprise: ${contactName}`,
       `Email: ${contactEmail}`,
       "",
-      `Nombre de pages: ${pageCount === "custom" ? `${customPages}` : pageCount}`,
-      `Pages sélectionnées: ${selectedPagesLabels || "—"}`,
+      `Pack pages: ${pageCount === "custom" ? `${customPages} pages` : pageCount === "1" ? "1 page" : "jusqu'à 5 pages"}`,
+      "",
+      "Pages:",
+      pagesRecap || "—",
       "",
       `Autonomie: ${wantsAutonomy ? `Oui (+${AUTONOMY_PRICE}€)` : "Non"}`,
       "",
@@ -275,8 +252,6 @@ const PriceSimulator = () => {
       extrasRecap ? `\nExtras:\n${extrasRecap}` : "",
       "",
       `TOTAL estimé: ${total.toLocaleString("fr-FR")}€ TTC (estimation)`,
-      "",
-      `Envoyé depuis le simulateur de prix du site.`,
     ]
       .filter(Boolean)
       .join("\n");
@@ -284,14 +259,14 @@ const PriceSimulator = () => {
 
   const sendEstimate = async () => {
     if (hasSent) return;
+
     if (!validateContact()) {
       setStep("contact");
       return;
     }
 
     if (!FORMSPREE_ENDPOINT || FORMSPREE_ENDPOINT.includes("XXXX")) {
-      // Fail-safe dev
-      alert("Veuillez configurer FORMSPREE_ENDPOINT dans PriceSimulator.tsx");
+      alert("Veuillez configurer FORMSPREE_ENDPOINT dans src/components/PriceSimulator.tsx");
       return;
     }
 
@@ -302,7 +277,6 @@ const PriceSimulator = () => {
       fd.append("email", contactEmail);
       fd.append("subject", "Estimation site web — Simulateur Elab'Site");
       fd.append("message", buildEstimateMessage());
-
       fd.append("_gotcha", "");
 
       const res = await fetch(FORMSPREE_ENDPOINT, {
@@ -337,7 +311,6 @@ const PriceSimulator = () => {
           </p>
         </div>
 
-        {/* Progress bar */}
         <div className="max-w-3xl mx-auto mb-8">
           <div className="flex justify-between mb-2">
             {steps.map((s, i) => (
@@ -365,34 +338,18 @@ const PriceSimulator = () => {
             {/* Step: Pages count */}
             {step === "pages" && (
               <div className="space-y-6 animate-fade-in">
-                <h3 className="text-xl font-bold text-foreground">
-                  De combien de pages avez-vous besoin ?
-                </h3>
+                <h3 className="text-xl font-bold text-foreground">De combien de pages avez-vous besoin ?</h3>
                 <div className="grid gap-4">
                   {[
-                    {
-                      value: "1" as const,
-                      label: "Page unique",
-                      desc: "Idéal pour une landing page ou carte de visite en ligne",
-                    },
-                    {
-                      value: "5" as const,
-                      label: "Jusqu'à 5 pages",
-                      desc: "Site vitrine classique — pages incluses dans le forfait",
-                    },
-                    {
-                      value: "custom" as const,
-                      label: "Plus de 5 pages",
-                      desc: "Site complet — chaque page supplémentaire à +100€",
-                    },
+                    { value: "1" as const, label: "Page unique", desc: "Idéal pour une landing page ou carte de visite en ligne" },
+                    { value: "5" as const, label: "Jusqu'à 5 pages", desc: "Site vitrine classique — pages incluses dans le forfait" },
+                    { value: "custom" as const, label: "Plus de 5 pages", desc: "Site complet — chaque page supplémentaire à +100€" },
                   ].map((option) => (
                     <button
                       key={option.value}
                       onClick={() => setPageCount(option.value)}
                       className={`text-left p-4 rounded-lg border-2 transition-all ${
-                        pageCount === option.value
-                          ? "border-primary bg-primary/5"
-                          : "border-border hover:border-primary/30"
+                        pageCount === option.value ? "border-primary bg-primary/5" : "border-border hover:border-primary/30"
                       }`}
                     >
                       <div className="font-semibold text-foreground">{option.label}</div>
@@ -409,11 +366,7 @@ const PriceSimulator = () => {
                       min={6}
                       max={30}
                       value={customPages}
-                      onChange={(e) =>
-                        setCustomPages(
-                          Math.max(6, Math.min(30, parseInt(e.target.value) || 6)),
-                        )
-                      }
+                      onChange={(e) => setCustomPages(Math.max(6, Math.min(30, parseInt(e.target.value) || 6)))}
                       className="w-24"
                     />
                   </div>
@@ -458,22 +411,13 @@ const PriceSimulator = () => {
                         key={page.id}
                         className={`flex items-center gap-3 p-3 rounded-lg border transition-all cursor-pointer ${
                           isSelected ? "border-primary bg-primary/5" : "border-border"
-                        } ${
-                          isDisabled && !isSelected
-                            ? "opacity-40 cursor-not-allowed"
-                            : "hover:border-primary/30"
-                        }`}
+                        } ${isDisabled && !isSelected ? "opacity-40 cursor-not-allowed" : "hover:border-primary/30"}`}
                       >
                         <Checkbox
                           checked={isSelected}
                           disabled={isAccueil || (isDisabled && !isSelected)}
                           onCheckedChange={() =>
-                            toggleItem(
-                              page.id,
-                              selectedPages,
-                              setSelectedPages,
-                              isAccueil,
-                            )
+                            toggleItem(page.id, selectedPages, setSelectedPages, isAccueil)
                           }
                         />
 
@@ -488,9 +432,7 @@ const PriceSimulator = () => {
 
                         <span
                           className={`text-sm ${
-                            isFreeIn5 || isAccueil
-                              ? "text-primary font-medium"
-                              : "text-muted-foreground"
+                            isFreeIn5 || isAccueil ? "text-primary font-medium" : "text-muted-foreground"
                           }`}
                         >
                           {displayPrice}
@@ -505,9 +447,7 @@ const PriceSimulator = () => {
             {/* Step: Autonomy */}
             {step === "autonomy" && (
               <div className="space-y-6 animate-fade-in">
-                <h3 className="text-xl font-bold text-foreground">
-                  Souhaitez-vous modifier votre site vous-même ?
-                </h3>
+                <h3 className="text-xl font-bold text-foreground">Souhaitez-vous modifier votre site vous-même ?</h3>
                 <p className="text-muted-foreground">
                   Avec l&apos;option autonomie, vous pourrez mettre à jour vos textes, images et contenus sans compétence technique.
                 </p>
@@ -516,9 +456,7 @@ const PriceSimulator = () => {
                   <button
                     onClick={() => setWantsAutonomy(false)}
                     className={`text-left p-4 rounded-lg border-2 transition-all ${
-                      !wantsAutonomy
-                        ? "border-primary bg-primary/5"
-                        : "border-border hover:border-primary/30"
+                      !wantsAutonomy ? "border-primary bg-primary/5" : "border-border hover:border-primary/30"
                     }`}
                   >
                     <div className="font-semibold text-foreground">Non, je vous confie la gestion</div>
@@ -530,14 +468,10 @@ const PriceSimulator = () => {
                   <button
                     onClick={() => setWantsAutonomy(true)}
                     className={`text-left p-4 rounded-lg border-2 transition-all ${
-                      wantsAutonomy
-                        ? "border-primary bg-primary/5"
-                        : "border-border hover:border-primary/30"
+                      wantsAutonomy ? "border-primary bg-primary/5" : "border-border hover:border-primary/30"
                     }`}
                   >
-                    <div className="font-semibold text-foreground">
-                      Oui, je veux être autonome (+{AUTONOMY_PRICE}€)
-                    </div>
+                    <div className="font-semibold text-foreground">Oui, je veux être autonome (+{AUTONOMY_PRICE}€)</div>
                     <div className="text-sm text-muted-foreground mt-1">
                       Interface d&apos;administration simple pour modifier vos contenus à tout moment
                     </div>
@@ -559,21 +493,14 @@ const PriceSimulator = () => {
                       <label
                         key={feature.id}
                         className={`flex items-center gap-3 p-3 rounded-lg border transition-all cursor-pointer ${
-                          isSelected
-                            ? "border-primary bg-primary/5"
-                            : "border-border hover:border-primary/30"
+                          isSelected ? "border-primary bg-primary/5" : "border-border hover:border-primary/30"
                         }`}
                       >
                         <Checkbox
                           checked={isSelected}
                           disabled={isIncluded}
                           onCheckedChange={() =>
-                            toggleItem(
-                              feature.id,
-                              selectedFeatures,
-                              setSelectedFeatures,
-                              isIncluded,
-                            )
+                            toggleItem(feature.id, selectedFeatures, setSelectedFeatures, isIncluded)
                           }
                         />
 
@@ -587,9 +514,7 @@ const PriceSimulator = () => {
                         </div>
 
                         {!isIncluded && (
-                          <span className="text-sm text-muted-foreground">
-                            +{feature.price}€
-                          </span>
+                          <span className="text-sm text-muted-foreground">+{feature.price}€</span>
                         )}
                       </label>
                     );
@@ -602,9 +527,7 @@ const PriceSimulator = () => {
             {step === "extras" && (
               <div className="space-y-6 animate-fade-in">
                 <h3 className="text-xl font-bold text-foreground">Services additionnels</h3>
-                <p className="text-muted-foreground">
-                  Ajoutez des fonctionnalités avancées selon vos besoins.
-                </p>
+                <p className="text-muted-foreground">Ajoutez des fonctionnalités avancées selon vos besoins.</p>
 
                 <div className="grid gap-3">
                   {extraOptions.map((extra) => {
@@ -614,16 +537,12 @@ const PriceSimulator = () => {
                       <label
                         key={extra.id}
                         className={`flex items-center gap-3 p-4 rounded-lg border transition-all cursor-pointer ${
-                          isSelected
-                            ? "border-primary bg-primary/5"
-                            : "border-border hover:border-primary/30"
+                          isSelected ? "border-primary bg-primary/5" : "border-border hover:border-primary/30"
                         }`}
                       >
                         <Checkbox
                           checked={isSelected}
-                          onCheckedChange={() =>
-                            toggleItem(extra.id, selectedExtras, setSelectedExtras)
-                          }
+                          onCheckedChange={() => toggleItem(extra.id, selectedExtras, setSelectedExtras)}
                         />
 
                         <div className="flex-1">
@@ -631,9 +550,7 @@ const PriceSimulator = () => {
                           <div className="text-sm text-muted-foreground">{extra.desc}</div>
                         </div>
 
-                        <span className="text-sm font-semibold text-foreground">
-                          +{extra.price}€
-                        </span>
+                        <span className="text-sm font-semibold text-foreground">+{extra.price}€</span>
                       </label>
                     );
                   })}
@@ -663,9 +580,7 @@ const PriceSimulator = () => {
                         setContactErrors((prev) => ({ ...prev, name: undefined }));
                       }}
                     />
-                    {contactErrors.name && (
-                      <p className="text-sm text-destructive">{contactErrors.name}</p>
-                    )}
+                    {contactErrors.name && <p className="text-sm text-destructive">{contactErrors.name}</p>}
                   </div>
 
                   <div className="space-y-2">
@@ -682,9 +597,7 @@ const PriceSimulator = () => {
                         setContactErrors((prev) => ({ ...prev, email: undefined }));
                       }}
                     />
-                    {contactErrors.email && (
-                      <p className="text-sm text-destructive">{contactErrors.email}</p>
-                    )}
+                    {contactErrors.email && <p className="text-sm text-destructive">{contactErrors.email}</p>}
                   </div>
                 </div>
               </div>
@@ -700,22 +613,12 @@ const PriceSimulator = () => {
                   <div className="text-5xl font-bold text-primary mb-2">
                     {calculatePrice().toLocaleString("fr-FR")}€
                   </div>
-                  <div className="text-sm text-muted-foreground">
-                    TTC • Devis final personnalisé sur demande
-                  </div>
+                  <div className="text-sm text-muted-foreground">TTC • Devis final personnalisé sur demande</div>
 
-                  <div className="mt-4 flex flex-col sm:flex-row gap-3 justify-center">
-                    <Button
-                      onClick={sendEstimate}
-                      disabled={isSending || hasSent}
-                      className="gap-2"
-                    >
+                  <div className="flex flex-col sm:flex-row gap-3 mt-6 justify-center">
+                    <Button onClick={sendEstimate} disabled={isSending || hasSent} className="gap-2">
                       <Send className="w-4 h-4" />
-                      {hasSent
-                        ? "Estimation envoyée"
-                        : isSending
-                          ? "Envoi..."
-                          : "Recevoir cette estimation par email"}
+                      {hasSent ? "Estimation envoyée" : isSending ? "Envoi..." : "Recevoir cette estimation par email"}
                     </Button>
 
                     <Button onClick={reset} variant="outline" className="gap-2">
@@ -725,8 +628,12 @@ const PriceSimulator = () => {
                   </div>
 
                   <p className="text-xs text-muted-foreground mt-3">
-                    En envoyant, vous acceptez que vos informations soient transmises via le prestataire
-                    de formulaire (Formspree) afin de traiter votre demande.
+                    En envoyant, vous acceptez que vos informations soient transmises via le prestataire de formulaire
+                    (Formspree) afin de traiter votre demande.{" "}
+                    <a href="/politique-de-confidentialite" className="underline underline-offset-4">
+                      En savoir plus
+                    </a>
+                    .
                   </p>
                 </div>
 
@@ -752,11 +659,7 @@ const PriceSimulator = () => {
                               {page.label}
                             </span>
                             <span className="font-medium text-foreground">
-                              {price === 0 ? (
-                                <span className="text-primary">Inclus</span>
-                              ) : (
-                                `+${price}€`
-                              )}
+                              {price === 0 ? <span className="text-primary">Inclus</span> : `+${price}€`}
                             </span>
                           </div>
                         ) : null;
@@ -803,27 +706,13 @@ const PriceSimulator = () => {
                     })}
                   </div>
                 </div>
-
-                <div className="flex flex-col sm:flex-row gap-3 pt-2">
-                  <Button asChild variant="outline" className="flex-1">
-                    <a href="/contact">Demander un devis gratuit</a>
-                  </Button>
-                  <Button asChild className="flex-1">
-                    <a href="#simulateur">Modifier mon estimation</a>
-                  </Button>
-                </div>
               </div>
             )}
 
             {/* Navigation */}
             {step !== "result" && (
               <div className="flex justify-between mt-8 pt-6 border-t border-border">
-                <Button
-                  variant="ghost"
-                  onClick={prev}
-                  disabled={currentIndex === 0}
-                  className="gap-2"
-                >
+                <Button variant="ghost" onClick={prev} disabled={currentIndex === 0} className="gap-2">
                   <ChevronLeft className="w-4 h-4" />
                   Précédent
                 </Button>
