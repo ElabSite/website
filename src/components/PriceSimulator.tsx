@@ -20,17 +20,8 @@ const BASE_PRICE_ONE_PAGE = 190;
 const PRICE_PER_EXTRA_PAGE = 100;
 const AUTONOMY_PRICE = 200;
 
-/**
- * IMPORTANT: mets ici ton endpoint Formspree
- * Format: https://formspree.io/f/XXXXXXX
- */
-const FORMSPREE_ENDPOINT = "https://formspree.io/f/XXXXXXX";
+const FORMSPREE_ENDPOINT = "https://formspree.io/f/xkoqgrqw";
 
-/*
-const maintenancePlans = [
-  { ... }
-];
-*/
 
 const pageOptions = [
   { id: "accueil", label: "Page d'accueil", price: 100 },
