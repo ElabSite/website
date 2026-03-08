@@ -22,7 +22,6 @@ const AUTONOMY_PRICE = 200;
 
 const FORMSPREE_ENDPOINT = "https://formspree.io/f/xkoqgrqw";
 
-
 const pageOptions = [
   { id: "accueil", label: "Page d'accueil", price: 100 },
   { id: "services", label: "Page Services", price: 100 },
@@ -77,11 +76,11 @@ const PriceSimulator = () => {
   const [contactEmail, setContactEmail] = useState("");
   const [contactErrors, setContactErrors] = useState<{ name?: string; email?: string }>({});
 
-  // évite le double envoi si re-render
-  const estimateSentRef = useRef(false);
-
   const steps: Step[] = ["pages", "pagesList", "autonomy", "features", "extras", "contact", "result"];
   const currentIndex = steps.indexOf(step);
+
+  const estimateSentRef = useRef(false);
+  const hiddenFormRef = useRef<HTMLFormElement | null>(null);
 
   const stepLabels: Record<Step, string> = {
     pages: "Nombre de pages",
@@ -149,57 +148,6 @@ const PriceSimulator = () => {
     return total;
   };
 
-  const next = () => {
-    if (currentIndex < steps.length - 1) {
-      if (step === "pages" && pageCount === "1") {
-        setSelectedPages(["accueil"]);
-        setStep("autonomy");
-      } else {
-        setStep(steps[currentIndex + 1]);
-      }
-    }
-  };
-
-  const prev = () => {
-    if (currentIndex > 0) {
-      if (step === "autonomy" && pageCount === "1") {
-        setStep("pages");
-      } else {
-        setStep(steps[currentIndex - 1]);
-      }
-    }
-  };
-
-  const validateContact = () => {
-    const errors: { name?: string; email?: string } = {};
-    if (!contactName.trim()) errors.name = "Veuillez entrer votre nom ou celui de votre entreprise";
-    if (!contactEmail.trim()) errors.email = "Veuillez entrer votre adresse email";
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+\.[^\s@]+$/.test(contactEmail.trim())) {
-      // fallback, mais on garde ta regex d’origine juste après
-    }
-
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contactEmail.trim())) errors.email = "Adresse email invalide";
-
-    setContactErrors(errors);
-    return Object.keys(errors).length === 0;
-  };
-
-  const reset = () => {
-    setStep("pages");
-    setPageCount("1");
-    setCustomPages(7);
-    setSelectedPages(["accueil"]);
-    setWantsAutonomy(false);
-    setSelectedFeatures(["form-contact", "seo", "google-maps", "social", "cookie-banner", "speed-opti"]);
-    setSelectedExtras([]);
-    setContactName("");
-    setContactEmail("");
-    setContactErrors({});
-    estimateSentRef.current = false;
-  };
-
-  const maxPages = getEffectivePageCount();
-
   const selectedPagesLabels = useMemo(() => {
     return selectedPages.map((id) => pageOptions.find((p) => p.id === id)?.label ?? id).join(", ");
   }, [selectedPages]);
@@ -211,6 +159,15 @@ const PriceSimulator = () => {
   const selectedExtrasLabels = useMemo(() => {
     return selectedExtras.map((id) => extraOptions.find((e) => e.id === id)?.label ?? id).join(", ");
   }, [selectedExtras]);
+
+  const validateContact = () => {
+    const errors: { name?: string; email?: string } = {};
+    if (!contactName.trim()) errors.name = "Veuillez entrer votre nom ou celui de votre entreprise";
+    if (!contactEmail.trim()) errors.email = "Veuillez entrer votre adresse email";
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contactEmail.trim())) errors.email = "Adresse email invalide";
+    setContactErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
 
   const buildEstimateMessage = () => {
     const total = calculatePrice();
@@ -251,11 +208,11 @@ const PriceSimulator = () => {
       "",
       `Autonomie: ${wantsAutonomy ? `Oui (+${AUTONOMY_PRICE}€)` : "Non"}`,
       "",
-      `Fonctionnalités (toutes): ${selectedFeaturesLabels || "—"}`,
+      `Fonctionnalités: ${selectedFeaturesLabels || "—"}`,
       paidFeaturesRecap ? `\nFonctionnalités payantes:\n${paidFeaturesRecap}` : "",
       extrasRecap ? `\nExtras:\n${extrasRecap}` : "",
       "",
-      `TOTAL estimé: ${total.toLocaleString("fr-FR")}€ TTC`,
+      `TOTAL estim��: ${total.toLocaleString("fr-FR")}€ TTC`,
       "",
       "Note: estimation indicative, devis final sur demande.",
     ]
@@ -263,7 +220,6 @@ const PriceSimulator = () => {
       .join("\n");
   };
 
-  // ENVOI AUTO quand on arrive sur "result"
   useEffect(() => {
     const shouldSend =
       step === "result" &&
@@ -274,43 +230,81 @@ const PriceSimulator = () => {
     if (!shouldSend) return;
 
     if (!FORMSPREE_ENDPOINT || FORMSPREE_ENDPOINT.includes("XXXX")) {
-      // On évite de casser l'UX si c'est mal configuré
-      console.warn("FORMSPREE_ENDPOINT non configuré dans PriceSimulator.tsx");
+      console.warn("FORMSPREE_ENDPOINT non configuré");
       estimateSentRef.current = true;
       return;
     }
 
     estimateSentRef.current = true;
 
-    // fire-and-forget (on ne bloque pas l’affichage)
-    (async () => {
-      try {
-        const fd = new FormData();
-        fd.append("name", contactName);
-        fd.append("email", contactEmail);
-        fd.append("subject", "Estimation site web — Simulateur Elab'Site");
-        fd.append("message", buildEstimateMessage());
-        fd.append("_gotcha", "");
+    // Soumission réelle (POST) sans quitter la page
+    queueMicrotask(() => {
+      hiddenFormRef.current?.submit();
+    });
+  }, [step, contactName, contactEmail]);
 
-        const res = await fetch(FORMSPREE_ENDPOINT, {
-          method: "POST",
-          headers: { Accept: "application/json" },
-          body: fd,
-        });
-
-        if (!res.ok) {
-          console.warn("Formspree error", await res.text());
-        }
-      } catch (err) {
-        console.warn("Impossible d'envoyer l'estimation", err);
+  const next = () => {
+    if (currentIndex < steps.length - 1) {
+      if (step === "pages" && pageCount === "1") {
+        setSelectedPages(["accueil"]);
+        setStep("autonomy");
+      } else {
+        setStep(steps[currentIndex + 1]);
       }
-    })();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [step]);
+    }
+  };
+
+  const prev = () => {
+    if (currentIndex > 0) {
+      if (step === "autonomy" && pageCount === "1") {
+        setStep("pages");
+      } else {
+        setStep(steps[currentIndex - 1]);
+      }
+    }
+  };
+
+  const reset = () => {
+    setStep("pages");
+    setPageCount("1");
+    setCustomPages(7);
+    setSelectedPages(["accueil"]);
+    setWantsAutonomy(false);
+    setSelectedFeatures(["form-contact", "seo", "google-maps", "social", "cookie-banner", "speed-opti"]);
+    setSelectedExtras([]);
+    setContactName("");
+    setContactEmail("");
+    setContactErrors({});
+    estimateSentRef.current = false;
+  };
+
+  const maxPages = getEffectivePageCount();
+  const total = calculatePrice();
 
   return (
     <section id="simulateur" className="py-20 bg-accent/10">
       <div className="container mx-auto px-4">
+        {/* Iframe + form cachés pour envoyer à Formspree sans redirection */}
+        <iframe
+          name="formspree_hidden_iframe"
+          title="hidden"
+          style={{ display: "none" }}
+        />
+        <form
+          ref={hiddenFormRef}
+          action={FORMSPREE_ENDPOINT}
+          method="POST"
+          target="formspree_hidden_iframe"
+          style={{ display: "none" }}
+        >
+          <input type="text" name="name" value={contactName} readOnly />
+          <input type="email" name="email" value={contactEmail} readOnly />
+          <input type="text" name="subject" value="Estimation site web — Simulateur Elab'Site" readOnly />
+          <textarea name="message" value={buildEstimateMessage()} readOnly />
+          {/* honeypot */}
+          <input type="text" name="_gotcha" value="" readOnly />
+        </form>
+
         <div className="text-center mb-12">
           <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-semibold mb-4">
             <Calculator className="w-4 h-4" />
@@ -349,8 +343,6 @@ const PriceSimulator = () => {
 
         <Card className="max-w-3xl mx-auto shadow-lg">
           <CardContent className="p-6 md:p-8">
-            {/* --- Le reste de ton composant est identique à celui que tu as, je ne change que le behavior d’envoi. --- */}
-
             {/* Step: Pages count */}
             {step === "pages" && (
               <div className="space-y-6 animate-fade-in">
@@ -413,7 +405,6 @@ const PriceSimulator = () => {
                 <div className="grid gap-3">
                   {pageOptions.map((page) => {
                     const isAccueil = page.id === "accueil";
-                    const isFreeIn5 = isPageFreeIn5Pack(page.id);
                     const isSelected = selectedPages.includes(page.id);
                     const isDisabled = !isSelected && selectedPages.length >= maxPages;
 
@@ -442,23 +433,10 @@ const PriceSimulator = () => {
                           disabled={isAccueil || (isDisabled && !isSelected)}
                           onCheckedChange={() => toggleItem(page.id, selectedPages, setSelectedPages, isAccueil)}
                         />
-
                         <div className="flex-1">
                           <span className="font-medium text-foreground">{page.label}</span>
-                          {(isFreeIn5 || isAccueil) && pageCount !== "custom" && (
-                            <span className="ml-2 text-xs bg-primary/10 text-primary px-2 py-0.5 rounded-full">
-                              Inclus
-                            </span>
-                          )}
                         </div>
-
-                        <span
-                          className={`text-sm ${
-                            isFreeIn5 || isAccueil ? "text-primary font-medium" : "text-muted-foreground"
-                          }`}
-                        >
-                          {displayPrice}
-                        </span>
+                        <span className="text-sm text-muted-foreground">{displayPrice}</span>
                       </label>
                     );
                   })}
@@ -521,7 +499,9 @@ const PriceSimulator = () => {
                         <Checkbox
                           checked={isSelected}
                           disabled={isIncluded}
-                          onCheckedChange={() => toggleItem(feature.id, selectedFeatures, setSelectedFeatures, isIncluded)}
+                          onCheckedChange={() =>
+                            toggleItem(feature.id, selectedFeatures, setSelectedFeatures, isIncluded)
+                          }
                         />
 
                         <div className="flex-1">
@@ -629,16 +609,17 @@ const PriceSimulator = () => {
                 <div className="bg-primary/5 border-2 border-primary rounded-2xl p-8">
                   <div className="text-sm text-muted-foreground mb-2">Estimation à partir de</div>
                   <div className="text-5xl font-bold text-primary mb-2">
-                    {calculatePrice().toLocaleString("fr-FR")}€
+                    {total.toLocaleString("fr-FR")}€
                   </div>
                   <div className="text-sm text-muted-foreground">TTC • Devis final personnalisé sur demande</div>
 
                   <p className="text-xs text-muted-foreground mt-4">
-                    Nous vous recontacterons à l’adresse <strong>{contactEmail || "—"}</strong> si besoin.
+                    Nous avons bien enregistré votre estimation et nous pourrons vous recontacter à{" "}
+                    <strong>{contactEmail}</strong> si besoin.
                   </p>
                 </div>
 
-                {/* Summary (inchangé) */}
+                {/* Summary */}
                 <div className="text-left space-y-4">
                   <h4 className="font-semibold text-foreground">Récapitulatif :</h4>
                   <div className="space-y-2 text-sm">
@@ -723,12 +704,7 @@ const PriceSimulator = () => {
             {/* Navigation */}
             {step !== "result" && (
               <div className="flex justify-between mt-8 pt-6 border-t border-border">
-                <Button
-                  variant="ghost"
-                  onClick={prev}
-                  disabled={currentIndex === 0}
-                  className="gap-2"
-                >
+                <Button variant="ghost" onClick={prev} disabled={currentIndex === 0} className="gap-2">
                   <ChevronLeft className="w-4 h-4" />
                   Précédent
                 </Button>
