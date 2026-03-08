@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -12,6 +12,7 @@ import {
   Shield,
   User,
   Mail,
+  Send,
 } from "lucide-react";
 
 type Step = "pages" | "pagesList" | "autonomy" | "features" | "extras" | "contact" | "result";
@@ -72,15 +73,18 @@ const PriceSimulator = () => {
     "speed-opti",
   ]);
   const [selectedExtras, setSelectedExtras] = useState<string[]>([]);
+  // const [maintenancePlan, setMaintenancePlan] = useState<string>("essentiel");
   const [contactName, setContactName] = useState("");
   const [contactEmail, setContactEmail] = useState("");
   const [contactErrors, setContactErrors] = useState<{ name?: string; email?: string }>({});
 
+  // Option A: envoi sur clic utilisateur (compatible CAPTCHA)
+  const hiddenFormRef = useRef<HTMLFormElement | null>(null);
+  const [isSendingEstimate, setIsSendingEstimate] = useState(false);
+  const [estimateSent, setEstimateSent] = useState(false);
+
   const steps: Step[] = ["pages", "pagesList", "autonomy", "features", "extras", "contact", "result"];
   const currentIndex = steps.indexOf(step);
-
-  const estimateSentRef = useRef(false);
-  const hiddenFormRef = useRef<HTMLFormElement | null>(null);
 
   const stepLabels: Record<Step, string> = {
     pages: "Nombre de pages",
@@ -108,9 +112,11 @@ const PriceSimulator = () => {
     return customPages;
   };
 
+  // For 5-page pack, accueil is always included + 4 other pages are free (except blog +100€)
   const isPageFreeIn5Pack = (pageId: string) => {
     if (pageCount !== "5") return false;
     if (pageId === "accueil") return true;
+    // Blog always costs extra even in 5-page pack
     if (pageId === "blog") return false;
     return true;
   };
@@ -124,10 +130,13 @@ const PriceSimulator = () => {
   const calculatePrice = () => {
     let total = BASE_PRICE_ONE_PAGE;
 
+    // Pages
     const extraPages = selectedPages.filter((p) => p !== "accueil");
     if (pageCount === "5") {
+      // In 5-page pack, all pages free except blog
       extraPages.forEach((pId) => {
         if (pId === "blog") total += 100;
+        // other pages are included
       });
     } else if (pageCount === "custom") {
       total += extraPages.length * PRICE_PER_EXTRA_PAGE;
@@ -145,8 +154,57 @@ const PriceSimulator = () => {
       if (extra) total += extra.price;
     });
 
+    // Maintenance affichée séparément, pas dans le total
     return total;
   };
+
+  const next = () => {
+    if (currentIndex < steps.length - 1) {
+      if (step === "pages" && pageCount === "1") {
+        setSelectedPages(["accueil"]);
+        setStep("autonomy");
+      } else {
+        setStep(steps[currentIndex + 1]);
+      }
+    }
+  };
+
+  const prev = () => {
+    if (currentIndex > 0) {
+      if (step === "autonomy" && pageCount === "1") {
+        setStep("pages");
+      } else {
+        setStep(steps[currentIndex - 1]);
+      }
+    }
+  };
+
+  const validateContact = () => {
+    const errors: { name?: string; email?: string } = {};
+    if (!contactName.trim()) errors.name = "Veuillez entrer votre nom ou celui de votre entreprise";
+    if (!contactEmail.trim()) errors.email = "Veuillez entrer votre adresse email";
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contactEmail.trim())) errors.email = "Adresse email invalide";
+    setContactErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
+  const reset = () => {
+    setStep("pages");
+    setPageCount("1");
+    setCustomPages(7);
+    setSelectedPages(["accueil"]);
+    setWantsAutonomy(false);
+    setSelectedFeatures(["form-contact", "seo", "google-maps", "social", "cookie-banner", "speed-opti"]);
+    setSelectedExtras([]);
+    // setMaintenancePlan("essentiel");
+    setContactName("");
+    setContactEmail("");
+    setContactErrors({});
+    setIsSendingEstimate(false);
+    setEstimateSent(false);
+  };
+
+  const maxPages = getEffectivePageCount();
 
   const selectedPagesLabels = useMemo(() => {
     return selectedPages.map((id) => pageOptions.find((p) => p.id === id)?.label ?? id).join(", ");
@@ -159,15 +217,6 @@ const PriceSimulator = () => {
   const selectedExtrasLabels = useMemo(() => {
     return selectedExtras.map((id) => extraOptions.find((e) => e.id === id)?.label ?? id).join(", ");
   }, [selectedExtras]);
-
-  const validateContact = () => {
-    const errors: { name?: string; email?: string } = {};
-    if (!contactName.trim()) errors.name = "Veuillez entrer votre nom ou celui de votre entreprise";
-    if (!contactEmail.trim()) errors.email = "Veuillez entrer votre adresse email";
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contactEmail.trim())) errors.email = "Adresse email invalide";
-    setContactErrors(errors);
-    return Object.keys(errors).length === 0;
-  };
 
   const buildEstimateMessage = () => {
     const total = calculatePrice();
@@ -212,7 +261,7 @@ const PriceSimulator = () => {
       paidFeaturesRecap ? `\nFonctionnalités payantes:\n${paidFeaturesRecap}` : "",
       extrasRecap ? `\nExtras:\n${extrasRecap}` : "",
       "",
-      `TOTAL estim��: ${total.toLocaleString("fr-FR")}€ TTC`,
+      `TOTAL estimé: ${total.toLocaleString("fr-FR")}€ TTC`,
       "",
       "Note: estimation indicative, devis final sur demande.",
     ]
@@ -220,66 +269,29 @@ const PriceSimulator = () => {
       .join("\n");
   };
 
-  useEffect(() => {
-    const shouldSend =
-      step === "result" &&
-      !estimateSentRef.current &&
-      contactName.trim().length > 0 &&
-      contactEmail.trim().length > 0;
-
-    if (!shouldSend) return;
+  const sendEstimate = () => {
+    if (estimateSent || isSendingEstimate) return;
 
     if (!FORMSPREE_ENDPOINT || FORMSPREE_ENDPOINT.includes("XXXX")) {
-      console.warn("FORMSPREE_ENDPOINT non configuré");
-      estimateSentRef.current = true;
+      alert("Veuillez configurer FORMSPREE_ENDPOINT dans PriceSimulator.tsx");
       return;
     }
 
-    estimateSentRef.current = true;
-
-    // Soumission réelle (POST) sans quitter la page
-    queueMicrotask(() => {
-      hiddenFormRef.current?.submit();
-    });
-  }, [step, contactName, contactEmail]);
-
-  const next = () => {
-    if (currentIndex < steps.length - 1) {
-      if (step === "pages" && pageCount === "1") {
-        setSelectedPages(["accueil"]);
-        setStep("autonomy");
-      } else {
-        setStep(steps[currentIndex + 1]);
-      }
+    // optionnel : sécurité UX
+    if (!validateContact()) {
+      setStep("contact");
+      return;
     }
-  };
 
-  const prev = () => {
-    if (currentIndex > 0) {
-      if (step === "autonomy" && pageCount === "1") {
-        setStep("pages");
-      } else {
-        setStep(steps[currentIndex - 1]);
-      }
-    }
-  };
+    setIsSendingEstimate(true);
 
-  const reset = () => {
-    setStep("pages");
-    setPageCount("1");
-    setCustomPages(7);
-    setSelectedPages(["accueil"]);
-    setWantsAutonomy(false);
-    setSelectedFeatures(["form-contact", "seo", "google-maps", "social", "cookie-banner", "speed-opti"]);
-    setSelectedExtras([]);
-    setContactName("");
-    setContactEmail("");
-    setContactErrors({});
-    estimateSentRef.current = false;
-  };
+    hiddenFormRef.current?.submit();
 
-  const maxPages = getEffectivePageCount();
-  const total = calculatePrice();
+    window.setTimeout(() => {
+      setIsSendingEstimate(false);
+      setEstimateSent(true);
+    }, 1200);
+  };
 
   return (
     <section id="simulateur" className="py-20 bg-accent/10">
@@ -287,7 +299,7 @@ const PriceSimulator = () => {
         {/* Iframe + form cachés pour envoyer à Formspree sans redirection */}
         <iframe
           name="formspree_hidden_iframe"
-          title="hidden"
+          title="formspree_hidden_iframe"
           style={{ display: "none" }}
         />
         <form
@@ -301,7 +313,6 @@ const PriceSimulator = () => {
           <input type="email" name="email" value={contactEmail} readOnly />
           <input type="text" name="subject" value="Estimation site web — Simulateur Elab'Site" readOnly />
           <textarea name="message" value={buildEstimateMessage()} readOnly />
-          {/* honeypot */}
           <input type="text" name="_gotcha" value="" readOnly />
         </form>
 
@@ -310,9 +321,7 @@ const PriceSimulator = () => {
             <Calculator className="w-4 h-4" />
             Simulateur de prix
           </div>
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">
-            Estimez le coût de votre site à Chambéry
-          </h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">Estimez le coût de votre site à Chambéry</h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
             Configurez votre projet étape par étape et obtenez une estimation personnalisée en quelques clics.
           </p>
@@ -405,6 +414,7 @@ const PriceSimulator = () => {
                 <div className="grid gap-3">
                   {pageOptions.map((page) => {
                     const isAccueil = page.id === "accueil";
+                    const isFreeIn5 = isPageFreeIn5Pack(page.id);
                     const isSelected = selectedPages.includes(page.id);
                     const isDisabled = !isSelected && selectedPages.length >= maxPages;
 
@@ -433,10 +443,23 @@ const PriceSimulator = () => {
                           disabled={isAccueil || (isDisabled && !isSelected)}
                           onCheckedChange={() => toggleItem(page.id, selectedPages, setSelectedPages, isAccueil)}
                         />
+
                         <div className="flex-1">
                           <span className="font-medium text-foreground">{page.label}</span>
+                          {(isFreeIn5 || isAccueil) && pageCount !== "custom" && (
+                            <span className="ml-2 text-xs bg-primary/10 text-primary px-2 py-0.5 rounded-full">
+                              Inclus
+                            </span>
+                          )}
                         </div>
-                        <span className="text-sm text-muted-foreground">{displayPrice}</span>
+
+                        <span
+                          className={`text-sm ${
+                            isFreeIn5 || isAccueil ? "text-primary font-medium" : "text-muted-foreground"
+                          }`}
+                        >
+                          {displayPrice}
+                        </span>
                       </label>
                     );
                   })}
@@ -461,7 +484,7 @@ const PriceSimulator = () => {
                   >
                     <div className="font-semibold text-foreground">Non, je vous confie la gestion</div>
                     <div className="text-sm text-muted-foreground mt-1">
-                      Je m&apos;occupe des modifications pour vous (inclus dans les forfaits maintenance)
+                      Je m'occupe des modifications pour vous (inclus dans les forfaits maintenance)
                     </div>
                   </button>
 
@@ -473,7 +496,7 @@ const PriceSimulator = () => {
                   >
                     <div className="font-semibold text-foreground">Oui, je veux être autonome (+{AUTONOMY_PRICE}€)</div>
                     <div className="text-sm text-muted-foreground mt-1">
-                      Interface d&apos;administration simple pour modifier vos contenus à tout moment
+                      Interface d'administration simple pour modifier vos contenus à tout moment
                     </div>
                   </button>
                 </div>
@@ -499,9 +522,7 @@ const PriceSimulator = () => {
                         <Checkbox
                           checked={isSelected}
                           disabled={isIncluded}
-                          onCheckedChange={() =>
-                            toggleItem(feature.id, selectedFeatures, setSelectedFeatures, isIncluded)
-                          }
+                          onCheckedChange={() => toggleItem(feature.id, selectedFeatures, setSelectedFeatures, isIncluded)}
                         />
 
                         <div className="flex-1">
@@ -609,13 +630,33 @@ const PriceSimulator = () => {
                 <div className="bg-primary/5 border-2 border-primary rounded-2xl p-8">
                   <div className="text-sm text-muted-foreground mb-2">Estimation à partir de</div>
                   <div className="text-5xl font-bold text-primary mb-2">
-                    {total.toLocaleString("fr-FR")}€
+                    {calculatePrice().toLocaleString("fr-FR")}€
                   </div>
                   <div className="text-sm text-muted-foreground">TTC • Devis final personnalisé sur demande</div>
 
-                  <p className="text-xs text-muted-foreground mt-4">
-                    Nous avons bien enregistré votre estimation et nous pourrons vous recontacter à{" "}
-                    <strong>{contactEmail}</strong> si besoin.
+                  <div className="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
+                    <Button
+                      onClick={sendEstimate}
+                      disabled={isSendingEstimate || estimateSent}
+                      className="gap-2"
+                    >
+                      <Send className="w-4 h-4" />
+                      {estimateSent ? "Demande envoyée" : isSendingEstimate ? "Envoi..." : "Me faire recontacter"}
+                    </Button>
+
+                    <Button onClick={reset} variant="outline" className="gap-2">
+                      <RotateCcw className="w-4 h-4" />
+                      Recommencer
+                    </Button>
+                  </div>
+
+                  <p className="text-xs text-muted-foreground mt-3">
+                    En cliquant sur “Me faire recontacter”, vos informations et votre estimation seront transmises via Formspree.
+                    <br />
+                    <a href="/politique-de-confidentialite" className="underline underline-offset-4">
+                      En savoir plus
+                    </a>
+                    .
                   </p>
                 </div>
 
@@ -690,10 +731,6 @@ const PriceSimulator = () => {
                 </div>
 
                 <div className="flex flex-col sm:flex-row gap-3 pt-4">
-                  <Button onClick={reset} variant="outline" className="flex-1 gap-2">
-                    <RotateCcw className="w-4 h-4" />
-                    Recommencer
-                  </Button>
                   <Button asChild className="flex-1">
                     <a href="/contact">Demander un devis gratuit</a>
                   </Button>
@@ -704,7 +741,12 @@ const PriceSimulator = () => {
             {/* Navigation */}
             {step !== "result" && (
               <div className="flex justify-between mt-8 pt-6 border-t border-border">
-                <Button variant="ghost" onClick={prev} disabled={currentIndex === 0} className="gap-2">
+                <Button
+                  variant="ghost"
+                  onClick={prev}
+                  disabled={currentIndex === 0}
+                  className="gap-2"
+                >
                   <ChevronLeft className="w-4 h-4" />
                   Précédent
                 </Button>
