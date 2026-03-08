@@ -9,7 +9,7 @@ const Footer = () => {
           <div>
             <h3 className="text-2xl font-bold mb-4 text-foreground">Elab&apos;Site</h3>
             <p className="text-muted-foreground mb-4">
-              Expert web à Chambéry pour des sites professionnels, sécurisés et optimisés.
+              Agence web à Chambéry pour des sites professionnels, sécurisés et optimisés.
             </p>
           </div>
 
