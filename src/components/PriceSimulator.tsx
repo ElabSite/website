@@ -3,52 +3,13 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
-import { Check, ChevronLeft, ChevronRight, Calculator, RotateCcw, Shield, User, Mail } from "lucide-react";
+import { Check, ChevronLeft, ChevronRight, Calculator, RotateCcw } from "lucide-react";
 
-type Step = "pages" | "pagesList" | "autonomy" | "features" | "extras" | "contact" | "result";
+type Step = "pages" | "pagesList" | "autonomy" | "features" | "extras" | "result";
 
 const BASE_PRICE_ONE_PAGE = 190;
 const PRICE_PER_EXTRA_PAGE = 100;
 const AUTONOMY_PRICE = 200;
-
-/*
-const maintenancePlans = [
-  {
-    id: "essentiel",
-    label: "Essentiel",
-    price: 19,
-    features: [
-      "Mises à jour de sécurité",
-      "Surveillance et maintien en ligne",
-      "Corrections de bugs",
-      "Sauvegardes hebdomadaires",
-    ],
-  },
-  {
-    id: "confort",
-    label: "Confort",
-    price: 59,
-    features: [
-      "Tout le plan Essentiel",
-      "Modifications mineures de contenu (2/mois)",
-      "Rapport mensuel",
-    ],
-  },
-  {
-    id: "premium",
-    label: "Premium",
-    price: 99,
-    features: [
-      "Tout le plan Confort",
-      "Modifications mineures de contenu (5/mois)",
-      "Modifications majeures de contenu (2/an)",
-      "Priorité de traitement",
-      "Sauvegardes quotidiennes",
-      "Optimisation SEO continue",
-    ],
-  },
-];
-*/
 
 const pageOptions = [
   { id: "accueil", label: "Page d'accueil", price: 100 },
@@ -100,12 +61,9 @@ const PriceSimulator = () => {
     "speed-opti",
   ]);
   const [selectedExtras, setSelectedExtras] = useState<string[]>([]);
-  // const [maintenancePlan, setMaintenancePlan] = useState<string>("essentiel");
-  const [contactName, setContactName] = useState("");
-  const [contactEmail, setContactEmail] = useState("");
-  const [contactErrors, setContactErrors] = useState<{ name?: string; email?: string }>({});
 
-  const steps: Step[] = ["pages", "pagesList", "autonomy", "features", "extras", "contact", "result"];
+  // Étapes sans "contact"
+  const steps: Step[] = ["pages", "pagesList", "autonomy", "features", "extras", "result"];
   const currentIndex = steps.indexOf(step);
 
   const stepLabels: Record<Step, string> = {
@@ -114,7 +72,6 @@ const PriceSimulator = () => {
     autonomy: "Autonomie",
     features: "Fonctionnalités",
     extras: "Services additionnels",
-    contact: "Vos coordonnées",
     result: "Votre estimation",
   };
 
@@ -138,7 +95,6 @@ const PriceSimulator = () => {
   const isPageFreeIn5Pack = (pageId: string) => {
     if (pageCount !== "5") return false;
     if (pageId === "accueil") return true;
-    // Blog always costs extra even in 5-page pack
     if (pageId === "blog") return false;
     return true;
   };
@@ -155,10 +111,8 @@ const PriceSimulator = () => {
     // Pages
     const extraPages = selectedPages.filter((p) => p !== "accueil");
     if (pageCount === "5") {
-      // In 5-page pack, all pages free except blog
       extraPages.forEach((pId) => {
         if (pId === "blog") total += 100;
-        // other pages are included
       });
     } else if (pageCount === "custom") {
       total += extraPages.length * PRICE_PER_EXTRA_PAGE;
@@ -176,7 +130,6 @@ const PriceSimulator = () => {
       if (extra) total += extra.price;
     });
 
-    // Maintenance affichée séparément, pas dans le total
     return total;
   };
 
@@ -201,15 +154,6 @@ const PriceSimulator = () => {
     }
   };
 
-  const validateContact = () => {
-    const errors: { name?: string; email?: string } = {};
-    if (!contactName.trim()) errors.name = "Veuillez entrer votre nom ou celui de votre entreprise";
-    if (!contactEmail.trim()) errors.email = "Veuillez entrer votre adresse email";
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contactEmail.trim())) errors.email = "Adresse email invalide";
-    setContactErrors(errors);
-    return Object.keys(errors).length === 0;
-  };
-
   const reset = () => {
     setStep("pages");
     setPageCount("1");
@@ -218,10 +162,6 @@ const PriceSimulator = () => {
     setWantsAutonomy(false);
     setSelectedFeatures(["form-contact", "seo", "google-maps", "social", "cookie-banner", "speed-opti"]);
     setSelectedExtras([]);
-    // setMaintenancePlan("essentiel");
-    setContactName("");
-    setContactEmail("");
-    setContactErrors({});
   };
 
   const maxPages = getEffectivePageCount();
@@ -234,7 +174,9 @@ const PriceSimulator = () => {
             <Calculator className="w-4 h-4" />
             Simulateur de prix
           </div>
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">Estimez le coût de votre site à Chambéry</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">
+            Estimez le coût de votre site à Chambéry
+          </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
             Configurez votre projet étape par étape et obtenez une estimation personnalisée en quelques clics.
           </p>
@@ -327,7 +269,6 @@ const PriceSimulator = () => {
                 <div className="grid gap-3">
                   {pageOptions.map((page) => {
                     const isAccueil = page.id === "accueil";
-                    const isFreeIn5 = isPageFreeIn5Pack(page.id);
                     const isSelected = selectedPages.includes(page.id);
                     const isDisabled = !isSelected && selectedPages.length >= maxPages;
 
@@ -354,25 +295,16 @@ const PriceSimulator = () => {
                         <Checkbox
                           checked={isSelected}
                           disabled={isAccueil || (isDisabled && !isSelected)}
-                          onCheckedChange={() => toggleItem(page.id, selectedPages, setSelectedPages, isAccueil)}
+                          onCheckedChange={() =>
+                            toggleItem(page.id, selectedPages, setSelectedPages, isAccueil)
+                          }
                         />
 
                         <div className="flex-1">
                           <span className="font-medium text-foreground">{page.label}</span>
-                          {(isFreeIn5 || isAccueil) && pageCount !== "custom" && (
-                            <span className="ml-2 text-xs bg-primary/10 text-primary px-2 py-0.5 rounded-full">
-                              Inclus
-                            </span>
-                          )}
                         </div>
 
-                        <span
-                          className={`text-sm ${
-                            isFreeIn5 || isAccueil ? "text-primary font-medium" : "text-muted-foreground"
-                          }`}
-                        >
-                          {displayPrice}
-                        </span>
+                        <span className="text-sm text-muted-foreground">{displayPrice}</span>
                       </label>
                     );
                   })}
@@ -385,7 +317,7 @@ const PriceSimulator = () => {
               <div className="space-y-6 animate-fade-in">
                 <h3 className="text-xl font-bold text-foreground">Souhaitez-vous modifier votre site vous-même ?</h3>
                 <p className="text-muted-foreground">
-                  Avec l'option autonomie, vous pourrez mettre à jour vos textes, images et contenus sans compétence technique.
+                  Avec l&apos;option autonomie, vous pourrez mettre à jour vos textes, images et contenus sans compétence technique.
                 </p>
 
                 <div className="grid gap-4">
@@ -397,7 +329,7 @@ const PriceSimulator = () => {
                   >
                     <div className="font-semibold text-foreground">Non, je vous confie la gestion</div>
                     <div className="text-sm text-muted-foreground mt-1">
-                      Je m'occupe des modifications pour vous (inclus dans les forfaits maintenance)
+                      Je m&apos;occupe des modifications pour vous (inclus dans les forfaits maintenance)
                     </div>
                   </button>
 
@@ -409,7 +341,7 @@ const PriceSimulator = () => {
                   >
                     <div className="font-semibold text-foreground">Oui, je veux être autonome (+{AUTONOMY_PRICE}€)</div>
                     <div className="text-sm text-muted-foreground mt-1">
-                      Interface d'administration simple pour modifier vos contenus à tout moment
+                      Interface d&apos;administration simple pour modifier vos contenus à tout moment
                     </div>
                   </button>
                 </div>
@@ -435,7 +367,9 @@ const PriceSimulator = () => {
                         <Checkbox
                           checked={isSelected}
                           disabled={isIncluded}
-                          onCheckedChange={() => toggleItem(feature.id, selectedFeatures, setSelectedFeatures, isIncluded)}
+                          onCheckedChange={() =>
+                            toggleItem(feature.id, selectedFeatures, setSelectedFeatures, isIncluded)
+                          }
                         />
 
                         <div className="flex-1">
@@ -490,93 +424,6 @@ const PriceSimulator = () => {
               </div>
             )}
 
-            {/*
-            Step: Maintenance (désactivé temporairement)
-
-            {step === "maintenance" && (
-              <div className="space-y-6 animate-fade-in">
-                <h3 className="text-xl font-bold text-foreground">Maintenance</h3>
-                <p className="text-muted-foreground text-sm">
-                  La maintenance est obligatoire pendant au moins 1 an pour garantir le bon fonctionnement de votre site. Choisissez le plan adapté à vos besoins.
-                </p>
-                <div className="grid gap-4">
-                  {maintenancePlans.map((plan) => {
-                    const isSelected = maintenancePlan === plan.id;
-                    return (
-                      <button
-                        key={plan.id}
-                        onClick={() => setMaintenancePlan(plan.id)}
-                        className={`text-left p-4 rounded-lg border-2 transition-all ${
-                          isSelected ? "border-primary bg-primary/5" : "border-border hover:border-primary/30"
-                        }`}
-                      >
-                        <div className="flex items-center justify-between mb-2">
-                          <div className="font-semibold text-foreground">{plan.label}</div>
-                          <div className="text-primary font-bold">
-                            {plan.price}€<span className="text-xs font-normal text-muted-foreground">/mois</span>
-                          </div>
-                        </div>
-                        <ul className="space-y-1">
-                          {plan.features.map((f, i) => (
-                            <li key={i} className="flex items-center gap-2 text-sm text-muted-foreground">
-                              <Check className="w-3 h-3 text-primary flex-shrink-0" />
-                              {f}
-                            </li>
-                          ))}
-                        </ul>
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-            )}
-            */}
-
-            {/* Step: Contact */}
-            {step === "contact" && (
-              <div className="space-y-6 animate-fade-in">
-                <h3 className="text-xl font-bold text-foreground">Vos coordonnées</h3>
-                <p className="text-muted-foreground">
-                  Renseignez vos informations pour recevoir votre estimation personnalisée.
-                </p>
-
-                <div className="space-y-4">
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium text-foreground flex items-center gap-2">
-                      <User className="w-4 h-4 text-primary" />
-                      Nom / Entreprise *
-                    </label>
-                    <Input
-                      placeholder="Votre nom ou le nom de votre entreprise"
-                      value={contactName}
-                      onChange={(e) => {
-                        setContactName(e.target.value);
-                        setContactErrors((prev) => ({ ...prev, name: undefined }));
-                      }}
-                    />
-                    {contactErrors.name && <p className="text-sm text-destructive">{contactErrors.name}</p>}
-                  </div>
-
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium text-foreground flex items-center gap-2">
-                      <Mail className="w-4 h-4 text-primary" />
-                      Adresse email *
-                    </label>
-                    <Input
-                      type="email"
-                      placeholder="votre@email.fr"
-                      value={contactEmail}
-                      onChange={(e) => {
-                        setContactEmail(e.target.value);
-                        setContactErrors((prev) => ({ ...prev, email: undefined }));
-                      }}
-                    />
-                    {contactErrors.email && <p className="text-sm text-destructive">{contactErrors.email}</p>}
-                  </div>
-                </div>
-              </div>
-            )}
-
             {/* Step: Result */}
             {step === "result" && (
               <div className="space-y-6 animate-fade-in text-center">
@@ -588,17 +435,6 @@ const PriceSimulator = () => {
                     {calculatePrice().toLocaleString("fr-FR")}€
                   </div>
                   <div className="text-sm text-muted-foreground">TTC • Devis final personnalisé sur demande</div>
-
-                  {/*
-                  {(() => {
-                    const plan = maintenancePlans.find((p) => p.id === maintenancePlan);
-                    return plan ? (
-                      <div className="text-sm text-muted-foreground mt-2">
-                        + <span className="font-semibold text-primary">{plan.price}€/mois</span> de maintenance
-                      </div>
-                    ) : null;
-                  })()}
-                  */}
                 </div>
 
                 {/* Summary */}
@@ -668,20 +504,6 @@ const PriceSimulator = () => {
                         </div>
                       ) : null;
                     })}
-
-                    {/*
-                    {(() => {
-                      const plan = maintenancePlans.find((p) => p.id === maintenancePlan);
-                      return plan ? (
-                        <div className="flex justify-between py-1 border-b border-border">
-                          <span className="text-muted-foreground flex items-center gap-1">
-                            <Shield className="w-3 h-3 text-primary" />Maintenance {plan.label} (1 an)
-                          </span>
-                          <span className="font-medium text-foreground">{plan.price}€/mois × 12</span>
-                        </div>
-                      ) : null;
-                    })()}
-                    */}
                   </div>
                 </div>
 
@@ -690,6 +512,7 @@ const PriceSimulator = () => {
                     <RotateCcw className="w-4 h-4" />
                     Recommencer
                   </Button>
+
                   <Button asChild className="flex-1">
                     <a href="/contact">Demander un devis gratuit</a>
                   </Button>
@@ -709,16 +532,8 @@ const PriceSimulator = () => {
                   <ChevronLeft className="w-4 h-4" />
                   Précédent
                 </Button>
-                <Button
-                  onClick={() => {
-                    if (step === "contact") {
-                      if (validateContact()) next();
-                    } else {
-                      next();
-                    }
-                  }}
-                  className="gap-2"
-                >
+
+                <Button onClick={next} className="gap-2">
                   {currentIndex === steps.length - 2 ? "Voir l'estimation" : "Suivant"}
                   <ChevronRight className="w-4 h-4" />
                 </Button>
