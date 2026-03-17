@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Check, ChevronLeft, ChevronRight, Calculator, RotateCcw } from "lucide-react";
+import { Link } from "react-router-dom";
 
 type Step = "pages" | "pagesList" | "autonomy" | "features" | "extras" | "result";
 
@@ -514,7 +515,7 @@ const PriceSimulator = () => {
                   </Button>
 
                   <Button asChild className="flex-1">
-                    <a href="/contact">Demander un devis gratuit</a>
+                    <Link to="/contact">Demander un devis gratuit</Link>
                   </Button>
                 </div>
               </div>
