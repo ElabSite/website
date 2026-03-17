@@ -104,7 +104,7 @@ const Tarifs = () => {
     if (meta) {
       meta.setAttribute(
         "content",
-        "Découvrez mes tarifs pour la création de site internet à Chambéry. Sites vitrine à partir de 190€ TTC, maintenance dès 19€/mois. Devis gratuit."
+        "Découvrez mes tarifs pour la création de site internet à Chambéry. Sites vitrine à partir de 190€ TTC, maintenance dès 19€/mois. Devis gratuit.",
       );
     }
   }, []);
@@ -123,7 +123,7 @@ const Tarifs = () => {
             </h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
               Des prix justes et compétitifs pour votre site web professionnel en Savoie.
-              Jusqu'à 40% moins cher que les agences traditionnelles.
+              Jusqu&apos;à 40% moins cher que les agences traditionnelles.
             </p>
           </div>
         </section>
@@ -171,7 +171,10 @@ const Tarifs = () => {
                         </li>
                       ))}
                     </ul>
+
+                    {/* ✅ correction: le Button "devient" le Link */}
                     <Button
+                      asChild
                       className="w-full"
                       variant={plan.popular ? "default" : "outline"}
                     >
@@ -203,7 +206,10 @@ const Tarifs = () => {
 
             <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
               {maintenancePlans.map((plan) => (
-                <Card key={plan.name} className="text-center hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <Card
+                  key={plan.name}
+                  className="text-center hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+                >
                   <CardHeader className="items-center">
                     <CardTitle className="text-xl">{plan.name}</CardTitle>
                     <div className="mt-4">
@@ -220,7 +226,8 @@ const Tarifs = () => {
                         </li>
                       ))}
                     </ul>
-                    <Button variant="outline" className="w-full">
+
+                    <Button asChild variant="outline" className="w-full">
                       <Link to="/contact">Souscrire</Link>
                     </Button>
                   </CardContent>
@@ -275,8 +282,14 @@ const Tarifs = () => {
             <p className="text-xl opacity-90 mb-8 max-w-2xl mx-auto">
               Contactez-moi pour discuter de votre projet. Devis personnalisé sous 48h.
             </p>
-            <Button size="lg" variant="secondary" className="text-lg px-8 py-6 hover:scale-105 transition-transform">
-            <Link to="/contact">Demander un devis gratuit</Link>
+
+            <Button
+              asChild
+              size="lg"
+              variant="secondary"
+              className="text-lg px-8 py-6 hover:scale-105 transition-transform"
+            >
+              <Link to="/contact">Demander un devis gratuit</Link>
             </Button>
           </div>
         </section>
