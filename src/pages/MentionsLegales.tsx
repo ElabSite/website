@@ -97,35 +97,65 @@ const MentionsLegales = () => {
               .
             </p>
           </section>
-
           <section className="mb-8">
             <h2 className="text-xl font-bold text-foreground mb-3">4. Propriété intellectuelle</h2>
             <p className="text-muted-foreground leading-relaxed">
-              L&apos;ensemble du contenu du site (textes, images, logos, graphismes, icônes, structure) est la propriété
-              exclusive d&apos;Elab&apos;Site ou de ses partenaires. Toute reproduction, représentation,[...]
+              L&apos;ensemble du contenu du site (textes, images, photographies, illustrations, logos, graphismes,
+              icônes, vidéos, éléments téléchargeables, structure, mise en page, charte graphique, code source) est, sauf
+              mention contraire, la propriété exclusive d&apos;Elab&apos;Site ou de ses partenaires et est protégé par le
+              droit de la propriété intellectuelle.
+            </p>
+            <p className="text-muted-foreground leading-relaxed mt-2">
+              Toute reproduction, représentation, modification, publication, adaptation, traduction ou exploitation,
+              totale ou partielle, de tout ou partie du site, par quelque procédé que ce soit, est interdite sans
+              l&apos;autorisation écrite préalable d&apos;Elab&apos;Site, sauf exceptions prévues par la loi.
+            </p>
+            <p className="text-muted-foreground leading-relaxed mt-2">
+              Toute utilisation non autorisée du site ou de l&apos;un quelconque de ses éléments pourra faire
+              l&apos;objet de poursuites, notamment au titre de la contrefaçon.
             </p>
           </section>
 
           <section className="mb-8">
             <h2 className="text-xl font-bold text-foreground mb-3">5. Responsabilité</h2>
             <p className="text-muted-foreground leading-relaxed">
-              Elab&apos;Site s&apos;efforce de fournir des informations exactes et à jour. Toutefois, l&apos;éditeur ne
-              saurait être tenu responsable des erreurs, omissions ou résultats obtenus suite à l&apos;utilis[...]
+              Elab&apos;Site s&apos;efforce de fournir sur ce site des informations aussi précises et à jour que
+              possible. Toutefois, ces informations sont fournies à titre indicatif et peuvent être modifiées à tout
+              moment, sans préavis. Elab&apos;Site ne saurait garantir l&apos;exactitude, l&apos;exhaustivité ou
+              l&apos;actualité des informations diffusées sur le site.
+            </p>
+            <p className="text-muted-foreground leading-relaxed mt-2">
+              L&apos;utilisateur reconnaît utiliser les informations disponibles sur le site sous sa responsabilité
+              exclusive. Elab&apos;Site ne pourra être tenue responsable des dommages directs ou indirects (notamment
+              perte de données, perte d&apos;exploitation, préjudice commercial) résultant de l&apos;accès ou de
+              l&apos;utilisation du site, ou de l&apos;impossibilité d&apos;y accéder.
+            </p>
+            <p className="text-muted-foreground leading-relaxed mt-2">
+              Le site peut contenir des liens vers des sites tiers. Elab&apos;Site n&apos;exerce aucun contrôle sur ces
+              sites et ne pourra être tenue responsable de leur contenu, de leurs pratiques ou de leur disponibilité.
             </p>
           </section>
 
           <section className="mb-8">
             <h2 className="text-xl font-bold text-foreground mb-3">6. Cookies</h2>
             <p className="text-muted-foreground leading-relaxed">
-              Ce site n&apos;utilise pas de cookies de tracking ou publicitaires. Seuls des cookies techniques
-              strictement nécessaires au bon fonctionnement du site peuvent être utilisés. Pour plus d&apos;in[...]
+              Ce site n&apos;utilise pas de cookies de mesure d&apos;audience, de tracking publicitaire ou de ciblage.
+              Seuls des cookies techniques strictement nécessaires au bon fonctionnement du site peuvent être utilisés
+              (par exemple pour la sécurité, l&apos;équilibrage, la gestion technique du site ou certaines fonctionnalités).
+            </p>
+            <p className="text-muted-foreground leading-relaxed mt-2">
+              Vous pouvez configurer votre navigateur pour refuser tout ou partie des cookies. Le refus de cookies
+              techniques peut toutefois dégrader certaines fonctionnalités.
+            </p>
+            <p className="text-muted-foreground leading-relaxed mt-2">
+              Pour plus d&apos;informations sur la manière dont vos données sont traitées, consultez la{" "}
               <Link to="/politique-de-confidentialite" className="text-primary hover:underline">
                 politique de confidentialité
               </Link>
               .
             </p>
           </section>
-
+          
           <section className="mb-8">
             <h2 className="text-xl font-bold text-foreground mb-3">7. Droit applicable</h2>
             <p className="text-muted-foreground leading-relaxed">
