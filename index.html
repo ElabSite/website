@@ -35,13 +35,10 @@
     />
     <meta name="twitter:image" content="https://www.elabsite.fr/og-image.jpg" />
 
-    <!-- IMPORTANT SEO:
-         Sur un site en prod, évite noindex/nofollow sinon Google n’indexera rien.
-         Laisse plutôt: index, follow. -->
+
     <meta name="robots" content="index, follow" />
 
-    <!-- SPA fallback GitHub Pages:
-         Restaurer l’URL après redirection 404.html (accès direct à /tarifs, etc.) -->
+
     <script>
       (function () {
         var params = new URLSearchParams(window.location.search);
@@ -49,9 +46,8 @@
         var h = params.get("h"); // ex: "#simulateur"
 
         if (p) {
-          // window.location.pathname ici vaut "/website/" (ou "/website" selon cas)
-          var basePath = window.location.pathname.replace(/\/$/, ""); // "/website"
-          var newUrl = window.location.origin + basePath + decodeURIComponent(p);
+          // ✅ site servi à la racine : pas de /website
+          var newUrl = window.location.origin + decodeURIComponent(p);
 
           if (h) newUrl += decodeURIComponent(h);
 
