@@ -5,27 +5,20 @@
     <meta name="robots" content="noindex" />
     <title>Redirecting…</title>
     <script>
-      // SPA fallback for GitHub Pages (subdirectory-compatible)
-      // Redirect /<repo>/some/path -> /<repo>/?p=/some/path&h=<hash>
+      // SPA fallback for GitHub Pages when the app is served from the domain root.
+      // Redirect /some/path -> /?p=/some/path&h=<hash>
       (function () {
         var l = window.location;
 
-        // Example:
-        // l.pathname = "/website/tarifs"
-        // base = "/website"
-        var parts = l.pathname.split("/");
-        var base = "/" + (parts[1] || "");
-
-        var pathAfterBase = l.pathname.slice(base.length); // "/tarifs"
-        if (!pathAfterBase) pathAfterBase = "/";
+        var path = l.pathname || "/";
+        if (!path.startsWith("/")) path = "/" + path;
 
         var redirectUrl =
           l.protocol +
           "//" +
           l.host +
-          base +
           "/?p=" +
-          encodeURIComponent(pathAfterBase) +
+          encodeURIComponent(path) +
           (l.search ? "&q=" + encodeURIComponent(l.search) : "") +
           (l.hash ? "&h=" + encodeURIComponent(l.hash) : "");
 
