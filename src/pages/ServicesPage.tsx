@@ -261,7 +261,7 @@ const ServicesPage = () => {
               Prêt à lancer votre projet ?
             </h2>
             <p className="text-xl opacity-90 mb-8 max-w-2xl mx-auto">
-              Contactez-moi pour un devis gratuit et personnalisé sous 24h.
+              Contactez-moi pour un devis gratuit et personnalisé sous 48h.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
