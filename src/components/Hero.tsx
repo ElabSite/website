@@ -21,7 +21,7 @@ const Hero = () => {
           </h1>
           <p className="text-xl md:text-2xl mb-8 text-muted-foreground max-w-2xl mx-auto">
             Expert web spécialisé dans la création de sites vitrine professionnels. 
-            Sécurité, référencement SEO et maintenance inclus.
+            Sécurité, référencement SEO et maintenance.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button 
