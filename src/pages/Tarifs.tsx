@@ -119,7 +119,7 @@ const Tarifs = () => {
               Tarifs transparents
             </div>
             <h1 className="text-4xl md:text-6xl font-bold mb-4 text-foreground">
-              Tarif site internet à Chambéry
+              Tarif site internet à Chambéry (mais aussi partout en France)
             </h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
               Des prix justes et compétitifs pour votre site web professionnel en Savoie.
