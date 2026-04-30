@@ -122,7 +122,7 @@ const Tarifs = () => {
               Tarif site internet à Chambéry (mais aussi partout en France)
             </h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Des prix justes et compétitifs pour votre site web professionnel en Savoie.
+              Des prix justes et compétitifs pour votre site web professionnel.
               Jusqu&apos;à 40% moins cher que les agences traditionnelles.
             </p>
           </div>
