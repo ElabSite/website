@@ -176,7 +176,7 @@ const PriceSimulator = () => {
             Simulateur de prix
           </div>
           <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">
-            Estimez le coût de votre site à Chambéry
+            Estimez le coût de votre site à Chambéry (mais aussi partout en France)
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
             Configurez votre projet étape par étape et obtenez une estimation personnalisée en quelques clics.
