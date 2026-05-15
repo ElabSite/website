@@ -17,7 +17,6 @@ const plans = [
       "Design sur mesure",
       "Formulaire de contact",
       "Optimisation SEO de base",
-      "Hébergement 1 an inclus",
       "Certificat SSL inclus",
       "Mise en ligne sous 7 jours",
     ],
