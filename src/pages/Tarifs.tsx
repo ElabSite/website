@@ -32,7 +32,6 @@ const plans = [
       "Design premium sur mesure",
       "Formulaire de contact avancé",
       "Optimisation SEO complète",
-      "Hébergement 1 an inclus",
       "Certificat SSL inclus",
       "Intégration Google Maps",
       "Intégration réseaux sociaux",
@@ -50,7 +49,6 @@ const plans = [
       "Design premium sur mesure",
       "Formulaire de contact avancé",
       "Optimisation SEO complète",
-      "Hébergement 1 an inclus",
       "Certificat SSL inclus",
       "Intégration Google Maps",
       "Intégration réseaux sociaux",
@@ -70,6 +68,7 @@ const maintenancePlans = [
       "Sauvegardes hebdomadaires",
       "Surveillance et maintien en ligne",
       "Correction de bugs",
+      "herbergement et nom de domaine inclus"
     ],
   },
   {
